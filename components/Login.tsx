@@ -1,8 +1,10 @@
-import { View, Text, Image, StyleSheet, SafeAreaView } from "react-native";
+import { View, Text, Image, StyleSheet, SafeAreaView, TouchableOpacity } from "react-native";
 import React from "react";
 import { Colors } from "@/Constant/Colors";
+import { useRouter } from "expo-router";
 
 export default function Login() {
+  const router = useRouter();
   return (
     <View style={styles.wrapper}>
       <Image source={require("./../assets/images/Login-Screen-Image.jpeg")} style={styles.image} />
@@ -11,9 +13,9 @@ export default function Login() {
           <Text style={styles.appName}>VEHO</Text>
           <Text style={styles.tagline}>Discover the future of travel planning</Text>
         </View>
-        <View style={styles.btn}>
+        <TouchableOpacity style={styles.btn} onPress={() => router.push("/auth/sign-in")}>
           <Text style={styles.btnTxt}>Start Your Journey</Text>
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -45,7 +47,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontFamily: "outfit-bold",
     textAlign: "center",
-    color: "#023047",
+    color: Colors.PRIMARY,
   },
   tagline: {
     textAlign: "center",
@@ -57,7 +59,7 @@ const styles = StyleSheet.create({
   btn: {
     padding: 15,
     borderRadius: 99,
-    borderColor: "#8ecae6",
+    borderColor: Colors.SECONDARY,
     borderWidth: 1.5,
     marginBottom: 10,
   },

@@ -1,5 +1,6 @@
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
+import { SafeAreaView } from "react-native";
 
 export default function RootLayout() {
   useFonts({
