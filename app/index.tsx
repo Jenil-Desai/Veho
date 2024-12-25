@@ -1,3 +1,4 @@
+import Login from "@/components/Login";
 import { Text, View } from "react-native";
 
 export default function Index() {
@@ -7,7 +8,7 @@ export default function Index() {
         flex: 1,
       }}
     >
-      <Text style={{ fontSize: 30, fontFamily: "outfit" }}>Veho</Text>
+      <Login />
     </View>
   );
 }
