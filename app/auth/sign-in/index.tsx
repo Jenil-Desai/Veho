@@ -1,9 +1,15 @@
-import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import React, { useEffect } from "react";
+import { Alert, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigation, useRouter } from "expo-router";
 import { Colors } from "@/Constant/Colors";
+import { auth } from "@/configs/firebaseConfig";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default function SignIn() {
+  const emailInputRef = useRef<TextInput | null>(null);
+  const passwordInputRef = useRef<TextInput | null>(null);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigation = useNavigation();
   const router = useRouter();
 
@@ -13,6 +19,59 @@ export default function SignIn() {
     });
   }, []);
 
+  const onLogin = () => {
+    if (email.length <= 0) {
+      Alert.alert(
+        "Error",
+        "Email Is Required",
+        [
+          {
+            text: "Ok",
+            style: "default",
+          },
+        ],
+        {
+          onDismiss: () => emailInputRef?.current?.focus(),
+          cancelable: true,
+        }
+      );
+      return;
+    }
+
+    if (password.length <= 0 || password.length < 8) {
+      Alert.alert(
+        "Error",
+        "Password Must Be Atleast 8 Characters",
+        [
+          {
+            text: "Ok",
+            style: "default",
+          },
+        ],
+        {
+          onDismiss: () => passwordInputRef?.current?.focus(),
+          cancelable: true,
+        }
+      );
+      return;
+    }
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        Alert.alert("Error In Creating Account", errorMessage, [
+          {
+            text: "Ok",
+            style: "default",
+          },
+        ]);
+      });
+  };
+
   return (
     <SafeAreaView style={styles.wrapper}>
       <View style={{ padding: 10, marginTop: 40 }}>
@@ -20,13 +79,13 @@ export default function SignIn() {
         <Text style={styles.subHeading}>Let's plan your next escape</Text>
         <View style={{ marginTop: 45 }}>
           <Text style={{ fontFamily: "outfit", marginLeft: 15 }}>Email</Text>
-          <TextInput style={styles.input} keyboardType="email-address" textContentType="emailAddress" placeholder="Enter Your Email" />
+          <TextInput style={styles.input} keyboardType="email-address" textContentType="emailAddress" placeholder="Enter Your Email" value={email} onChangeText={(value) => setEmail(value)} ref={emailInputRef} />
         </View>
         <View style={{ marginTop: 20 }}>
           <Text style={{ fontFamily: "outfit", marginLeft: 15 }}>Password</Text>
-          <TextInput style={styles.input} secureTextEntry={true} textContentType="password" placeholder="Enter Your Password" />
+          <TextInput style={styles.input} secureTextEntry={true} textContentType="password" placeholder="Enter Your Password" value={password} onChangeText={(value) => setPassword(value)} ref={passwordInputRef} />
         </View>
-        <TouchableOpacity style={styles.btn}>
+        <TouchableOpacity style={styles.btn} onPress={onLogin}>
           <Text style={styles.btnTxt}>Log In</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.btnSecndary} onPress={() => router.replace("/auth/sign-up")}>

@@ -1,9 +1,17 @@
-import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import React, { useEffect } from "react";
+import { Alert, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigation, useRouter } from "expo-router";
 import { Colors } from "@/Constant/Colors";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/configs/firebaseConfig";
 
 export default function SignUp() {
+  const nameInputRef = useRef<TextInput | null>(null);
+  const emailInputRef = useRef<TextInput | null>(null);
+  const passwordInputRef = useRef<TextInput | null>(null);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigation = useNavigation();
   const router = useRouter();
 
@@ -13,6 +21,77 @@ export default function SignUp() {
     });
   }, []);
 
+  const onCreateAccount = () => {
+    if (name.length <= 0) {
+      Alert.alert(
+        "Error",
+        "Name Is Required",
+        [
+          {
+            text: "Ok",
+            style: "default",
+          },
+        ],
+        {
+          onDismiss: () => nameInputRef?.current?.focus(),
+          cancelable: true,
+        }
+      );
+      return;
+    }
+
+    if (email.length <= 0) {
+      Alert.alert(
+        "Error",
+        "Email Is Required",
+        [
+          {
+            text: "Ok",
+            style: "default",
+          },
+        ],
+        {
+          onDismiss: () => emailInputRef?.current?.focus(),
+          cancelable: true,
+        }
+      );
+      return;
+    }
+
+    if (password.length <= 0 || password.length < 8) {
+      Alert.alert(
+        "Error",
+        "Password Must Be Atleast 8 Characters",
+        [
+          {
+            text: "Ok",
+            style: "default",
+          },
+        ],
+        {
+          onDismiss: () => passwordInputRef?.current?.focus(),
+          cancelable: true,
+        }
+      );
+      return;
+    }
+
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        Alert.alert("Error In Creating Account", errorMessage, [
+          {
+            text: "Ok",
+            style: "default",
+          },
+        ]);
+      });
+  };
+
   return (
     <SafeAreaView style={styles.wrapper}>
       <View style={{ padding: 10, marginTop: 40 }}>
@@ -20,17 +99,17 @@ export default function SignUp() {
         <Text style={styles.subHeading}>Travel planning, reimagined with AI</Text>
         <View style={{ marginTop: 45 }}>
           <Text style={{ fontFamily: "outfit", marginLeft: 15 }}>Full Name</Text>
-          <TextInput style={styles.input} keyboardType="default" textContentType="name" placeholder="Enter Your Name" />
+          <TextInput style={styles.input} keyboardType="default" textContentType="name" placeholder="Enter Your Name" onChangeText={(value) => setName(value)} ref={nameInputRef} />
         </View>
         <View style={{ marginTop: 20 }}>
           <Text style={{ fontFamily: "outfit", marginLeft: 15 }}>Email</Text>
-          <TextInput style={styles.input} keyboardType="email-address" textContentType="emailAddress" placeholder="Enter Your Email" />
+          <TextInput style={styles.input} keyboardType="email-address" textContentType="emailAddress" placeholder="Enter Your Email" onChangeText={(value) => setEmail(value)} ref={emailInputRef} />
         </View>
         <View style={{ marginTop: 20 }}>
           <Text style={{ fontFamily: "outfit", marginLeft: 15 }}>Password</Text>
-          <TextInput style={styles.input} secureTextEntry={true} textContentType="password" placeholder="Enter Your Password" />
+          <TextInput style={styles.input} secureTextEntry={true} textContentType="password" placeholder="Enter Your Password" onChangeText={(value) => setPassword(value)} ref={passwordInputRef} />
         </View>
-        <TouchableOpacity style={styles.btn}>
+        <TouchableOpacity style={styles.btn} onPress={onCreateAccount}>
           <Text style={styles.btnTxt}>Sign Up</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.btnSecndary} onPress={() => router.replace("/auth/sign-in")}>
