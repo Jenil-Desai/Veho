@@ -96,8 +96,8 @@ export default function SignUp() {
   return (
     <SafeAreaView style={styles.wrapper}>
       <View style={{ padding: 10, marginTop: 40 }}>
-        <Text style={styles.heading}>Begin your journey</Text>
-        <Text style={styles.subHeading}>Travel planning, reimagined with AI</Text>
+        <Text style={styles.heading}>Begin your intelligent journey</Text>
+        <Text style={styles.subHeading}>Where AI meets adventure</Text>
         <View style={{ marginTop: 45 }}>
           <Text style={{ fontFamily: "outfit", marginLeft: 15 }}>Full Name</Text>
           <TextInput style={styles.input} keyboardType="default" textContentType="name" placeholder="Enter Your Name" onChangeText={(value) => setName(value)} ref={nameInputRef} />

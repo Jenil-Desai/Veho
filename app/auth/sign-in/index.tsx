@@ -76,8 +76,8 @@ export default function SignIn() {
   return (
     <SafeAreaView style={styles.wrapper}>
       <View style={{ padding: 10, marginTop: 40 }}>
-        <Text style={styles.heading}>Hello again, wanderer</Text>
-        <Text style={styles.subHeading}>Let's plan your next escape</Text>
+        <Text style={styles.heading}>Welcome back, explorer</Text>
+        <Text style={styles.subHeading}>Your intelligent journey continues</Text>
         <View style={{ marginTop: 45 }}>
           <Text style={{ fontFamily: "outfit", marginLeft: 15 }}>Email</Text>
           <TextInput style={styles.input} keyboardType="email-address" textContentType="emailAddress" placeholder="Enter Your Email" value={email} onChangeText={(value) => setEmail(value)} ref={emailInputRef} />
