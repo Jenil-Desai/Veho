@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   },
   btn: {
     padding: 15,
-    borderRadius: 20,
+    borderRadius: 99,
     paddingHorizontal: 30,
     backgroundColor: Colors.SECONDARY,
   },

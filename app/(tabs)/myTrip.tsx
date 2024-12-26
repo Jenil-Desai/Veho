@@ -9,11 +9,13 @@ export default function MyTrip() {
 
   return (
     <SafeAreaView style={styles.warpper}>
-      <View style={styles.headerContainer}>
-        <Text style={styles.header}>MyTrip</Text>
-        <Ionicons name="add-circle" size={40} color={Colors.PRIMARY} />
+      <View style={styles.container}>
+        <View style={styles.headerContainer}>
+          <Text style={styles.header}>MyTrip</Text>
+          <Ionicons name="add-circle" size={40} color={Colors.PRIMARY} />
+        </View>
+        {userTrips.length === 0 ? <StartNewTripCard /> : null}
       </View>
-      {userTrips.length === 0 ? <StartNewTripCard /> : null}
     </SafeAreaView>
   );
 }
@@ -21,7 +23,9 @@ export default function MyTrip() {
 const styles = StyleSheet.create({
   warpper: {
     backgroundColor: Colors.WHITE,
-    height: "100%",
+    flex: 1,
+  },
+  container: {
     padding: 25,
   },
   headerContainer: {

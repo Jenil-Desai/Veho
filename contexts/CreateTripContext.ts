@@ -1,3 +1,4 @@
+import { TravelerOption } from "@/components/selectTraveler/selectTravelerOptions";
 import { createContext } from "react";
 
 interface TripData {
@@ -8,6 +9,7 @@ interface TripData {
       lng: number;
     };
   };
+  travelerCount: TravelerOption;
 }
 
 export interface CreateTripContext {
@@ -23,6 +25,13 @@ export const CreateTripContext = createContext<CreateTripContext>({
         lat: 0,
         lng: 0,
       },
+    },
+    travelerCount: {
+      id: "",
+      title: "",
+      description: "",
+      icon: "",
+      people: "",
     },
   },
   setTripData: () => {},

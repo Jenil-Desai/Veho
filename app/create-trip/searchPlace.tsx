@@ -1,6 +1,6 @@
-import { SafeAreaView, StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import React, { useContext, useEffect } from "react";
-import { useNavigation } from "expo-router";
+import { useNavigation, useRouter } from "expo-router";
 import { Colors } from "@/Constant/Colors";
 import MapboxPlacesAutocomplete from "@/components/react-native-mapbox-places-autocomplete";
 import { CreateTripContext } from "@/contexts/CreateTripContext";
@@ -8,40 +8,46 @@ import { LocationData } from "@/components/react-native-mapbox-places-autocomple
 
 export default function searchPlace() {
   const navigation = useNavigation();
+  const router = useRouter();
   const { tripData, setTripData } = useContext(CreateTripContext);
 
   useEffect(() => {
     navigation.setOptions({
-      headerShown: true,
-      headerTransparent: true,
       headerTitle: "Search Place",
-      headerBackTitle: "Back",
     });
   }, []);
   return (
     <SafeAreaView style={styles.wrapper}>
-      <MapboxPlacesAutocomplete
-        id="origin"
-        placeholder="Search Place"
-        accessToken={process.env.EXPO_PUBLIC_MAPBOX_PUBLIC_TOKEN}
-        onPlaceSelect={(data: LocationData) => {
-          console.dir(data);
-          setTripData({
-            location: {
-              name: data.place_name,
-              cordinates: {
-                lat: data.geometry.coordinates[1],
-                lng: data.geometry.coordinates[0],
+      <View style={styles.container}>
+        <Text style={styles.heading}>Where to explore?</Text>
+        <View style={styles.subHeadingContainer}>
+          <Text style={styles.subHeading}>Let AI discover your perfect destination</Text>
+        </View>
+        <MapboxPlacesAutocomplete
+          id="origin"
+          placeholder="Search Place"
+          accessToken={process.env.EXPO_PUBLIC_MAPBOX_PUBLIC_TOKEN}
+          onPlaceSelect={(data: LocationData) => {
+            console.dir(data);
+            setTripData({
+              ...tripData,
+              location: {
+                name: data.place_name,
+                cordinates: {
+                  lat: data.geometry.coordinates[1],
+                  lng: data.geometry.coordinates[0],
+                },
               },
-            },
-          });
-        }}
-        countryId="IN"
-        containerStyle={{
-          marginBottom: 12,
-        }}
-        inputStyle={styles.input}
-      />
+            });
+            router.push("/create-trip/selectTraveler");
+          }}
+          countryId="IN"
+          containerStyle={{
+            marginBottom: 1,
+          }}
+          inputStyle={styles.input}
+        />
+      </View>
     </SafeAreaView>
   );
 }
@@ -49,8 +55,28 @@ export default function searchPlace() {
 const styles = StyleSheet.create({
   wrapper: {
     backgroundColor: Colors.WHITE,
-    height: "100%",
-    padding: 50,
+    flex: 1,
   },
-  input: {},
+  container: {
+    marginTop: 30,
+    padding: 25,
+  },
+  heading: {
+    fontSize: 30,
+    fontFamily: "outfit-bold",
+  },
+  subHeadingContainer: {
+    marginTop: 1,
+    marginBottom: 25,
+  },
+  subHeading: {
+    fontFamily: "outfit-bold",
+    fontSize: 15,
+  },
+  input: {
+    height: 50,
+    borderRadius: 99,
+    borderColor: Colors.GRAY,
+    fontFamily: "outfit",
+  },
 });

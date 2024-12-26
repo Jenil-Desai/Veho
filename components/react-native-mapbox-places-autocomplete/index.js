@@ -84,8 +84,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.WHITE,
     color: "#374151",
   },
-  clearBtnImage: { width: 20, height: 20 },
-  clearBtn: { position: "absolute", top: 6, right: 5 },
+  clearBtnImage: { width: 35, height: 35 },
+  clearBtn: { position: "absolute", top: -1, right: 5 },
   suggestionList: {
     position: "absolute",
     zIndex: 100,
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f9fafb",
     borderRadius: 4,
     marginHorizontal: 2,
-    top: 32,
+    top: 45,
     left: 2,
     shadowColor: "#000",
     shadowOffset: {
@@ -107,11 +107,13 @@ const styles = StyleSheet.create({
   },
   suggestionItem: {
     color: "#374151",
+    fontFamily: "outfit",
     fontWeight: "300",
     fontSize: 12,
     borderBottomWidth: 0.3,
     borderBottomColor: "#9ca3af",
     marginTop: 2,
+    padding: 5,
   },
   creditBox: {
     display: "flex",
