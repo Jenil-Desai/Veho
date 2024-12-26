@@ -59,11 +59,12 @@ export default function SignIn() {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
+        router.replace("/(tabs)/myTrip");
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        Alert.alert("Error In Creating Account", errorMessage, [
+        Alert.alert("Error Invalid Details", errorMessage, [
           {
             text: "Ok",
             style: "default",
