@@ -16,7 +16,7 @@ export default function SelectTraveler() {
 
   useEffect(() => {
     navigation.setOptions({
-      headerTitle: "Search Travelers",
+      headerTitle: "Select Travelers",
     });
   }, []);
 

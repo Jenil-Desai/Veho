@@ -16,6 +16,21 @@ export default function searchPlace() {
       headerTitle: "Search Place",
     });
   }, []);
+
+  function handlePlaceSelected(data: LocationData) {
+    setTripData({
+      ...tripData,
+      location: {
+        name: data.place_name,
+        cordinates: {
+          lat: data.geometry.coordinates[1],
+          lng: data.geometry.coordinates[0],
+        },
+      },
+    });
+    router.push("/create-trip/selectTraveler");
+  }
+
   return (
     <SafeAreaView style={styles.wrapper}>
       <View style={styles.container}>
@@ -23,30 +38,7 @@ export default function searchPlace() {
         <View style={styles.subHeadingContainer}>
           <Text style={styles.subHeading}>Let AI discover your perfect destination</Text>
         </View>
-        <MapboxPlacesAutocomplete
-          id="origin"
-          placeholder="Search Place"
-          accessToken={process.env.EXPO_PUBLIC_MAPBOX_PUBLIC_TOKEN}
-          onPlaceSelect={(data: LocationData) => {
-            console.dir(data);
-            setTripData({
-              ...tripData,
-              location: {
-                name: data.place_name,
-                cordinates: {
-                  lat: data.geometry.coordinates[1],
-                  lng: data.geometry.coordinates[0],
-                },
-              },
-            });
-            router.push("/create-trip/selectTraveler");
-          }}
-          countryId="IN"
-          containerStyle={{
-            marginBottom: 1,
-          }}
-          inputStyle={styles.input}
-        />
+        <MapboxPlacesAutocomplete id="origin" placeholder="Search Place" accessToken={process.env.EXPO_PUBLIC_MAPBOX_PUBLIC_TOKEN} onPlaceSelect={handlePlaceSelected} countryId="IN" containerStyle={undefined} inputStyle={styles.input} />
       </View>
     </SafeAreaView>
   );

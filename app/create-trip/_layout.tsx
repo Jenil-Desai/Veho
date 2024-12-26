@@ -1,6 +1,8 @@
 import { CreateTripContext } from "@/contexts/CreateTripContext";
-import { Slot } from "expo-router";
+import { Slot, Stack } from "expo-router";
+import moment from "moment";
 import { useState } from "react";
+import { ScreenStackHeaderSearchBarView } from "react-native-screens";
 
 export default function CreateTripLayout() {
   const [tripData, setTripData] = useState<CreateTripContext["tripData"]>({
@@ -18,11 +20,16 @@ export default function CreateTripLayout() {
       icon: "",
       people: "",
     },
+    dates: {
+      startDate: moment(new Date()),
+      endDate: moment(new Date()),
+      totalNoOfDays: 0,
+    },
   });
 
   return (
     <CreateTripContext.Provider value={{ tripData, setTripData }}>
-      <Slot
+      <Stack
         screenOptions={{
           headerShown: true,
           headerTransparent: true,

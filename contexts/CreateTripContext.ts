@@ -1,4 +1,5 @@
 import { TravelerOption } from "@/components/selectTraveler/selectTravelerOptions";
+import moment from "moment";
 import { createContext } from "react";
 
 interface TripData {
@@ -10,6 +11,11 @@ interface TripData {
     };
   };
   travelerCount: TravelerOption;
+  dates: {
+    startDate: moment.Moment;
+    endDate: moment.Moment;
+    totalNoOfDays: number;
+  };
 }
 
 export interface CreateTripContext {
@@ -32,6 +38,11 @@ export const CreateTripContext = createContext<CreateTripContext>({
       description: "",
       icon: "",
       people: "",
+    },
+    dates: {
+      startDate: moment(new Date()),
+      endDate: moment(new Date()),
+      totalNoOfDays: 0,
     },
   },
   setTripData: () => {},
