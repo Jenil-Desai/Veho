@@ -25,6 +25,12 @@ export default function CreateTripLayout() {
       endDate: moment(new Date()),
       totalNoOfDays: 0,
     },
+    budgetOption: {
+      id: "",
+      title: "",
+      description: "",
+      icon: "",
+    },
   });
 
   return (

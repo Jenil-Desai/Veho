@@ -1,14 +1,13 @@
-import { Text, SafeAreaView, StyleSheet, View, Platform, TouchableOpacity, Alert } from "react-native";
+import { View, Text, SafeAreaView, StyleSheet, Platform, TouchableOpacity, FlatList, Alert } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { Colors } from "@/Constant/Colors";
-import { useNavigation, useRouter } from "expo-router";
 import { CreateTripContext } from "@/contexts/CreateTripContext";
-import CalenderPicker, { ChangedDate } from "react-native-calendar-picker";
-import moment from "moment";
+import { useNavigation, useRouter } from "expo-router";
+import budgetOptions, { BudgetOption } from "@/components/selectBudget/selectBudgetOptions";
+import BudgetOptionCard from "@/components/selectBudget/BudgetOptionCard";
 
-export default function SelectDate(this: any) {
-  const [startDate, setStartDate] = useState<moment.Moment>(moment());
-  const [endDate, setEndDate] = useState<moment.Moment>(moment());
+export default function SelectBudget() {
+  const [selectedBudget, setSelectedBudget] = useState<BudgetOption>(budgetOptions[0]);
   const navigation = useNavigation();
   const router = useRouter();
   const { tripData, setTripData } = useContext(CreateTripContext);
@@ -16,20 +15,22 @@ export default function SelectDate(this: any) {
 
   useEffect(() => {
     navigation.setOptions({
-      headerTitle: "Search Travelers",
+      headerTitle: "Select Budget",
     });
   }, []);
 
-  function handleDateChange(date: Date, type: ChangedDate) {
-    if (type === "START_DATE") setStartDate(moment(date));
-    if (type === "END_DATE") setEndDate(moment(date));
-  }
+  useEffect(() => {
+    setTripData({
+      ...tripData,
+      budgetOption: selectedBudget,
+    });
+  }, [selectedBudget]);
 
   function handleCountinue() {
-    if (!startDate && !endDate) {
+    if (!selectedBudget) {
       Alert.alert(
         "Error",
-        "Select The Start & End Date",
+        "Select The Budget",
         [
           {
             text: "Ok",
@@ -42,28 +43,26 @@ export default function SelectDate(this: any) {
       );
       return;
     }
-    const totalNoDays = endDate.diff(startDate, "days");
-    setTripData({
-      ...tripData,
-      dates: {
-        startDate,
-        endDate,
-        totalNoOfDays: totalNoDays + 1,
-      },
-    });
-    console.log("Button Selected Date --- ", tripData);
-    router.push("/create-trip/selectBudget");
+    router.push("/create-trip/reviewTrip");
   }
 
   return (
     <SafeAreaView style={styles.wrapper}>
       <View style={[styles.container, containerMargin]}>
-        <Text style={styles.heading}>When's your adventure?</Text>
+        <Text style={styles.heading}>Set your scope</Text>
         <View style={styles.subHeadingContainer}>
-          <Text style={styles.subHeading}>Choose your exploration window</Text>
+          <Text style={styles.subHeading}>Plan your journey's investment</Text>
         </View>
-        <View style={styles.calenderContainer}>
-          <CalenderPicker allowRangeSelection={true} onDateChange={handleDateChange} minDate={new Date()} maxRangeDuration={15} selectedRangeStyle={styles.selectedRange} selectedDayTextStyle={styles.selectedDayText} />
+        <View style={Platform.OS === "ios" ? null : styles.optionContainer}>
+          <FlatList
+            data={budgetOptions}
+            renderItem={({ item }) => (
+              <TouchableOpacity onPress={() => setSelectedBudget(item)}>
+                <BudgetOptionCard BudgetOption={item} selected={selectedBudget} />
+              </TouchableOpacity>
+            )}
+            keyExtractor={(item: BudgetOption) => item.id}
+          />
         </View>
         <TouchableOpacity style={styles.btn} onPress={handleCountinue}>
           <Text style={styles.btnTxt}>Coutinue</Text>
@@ -92,14 +91,8 @@ export const styles = StyleSheet.create({
     fontFamily: "outfit-bold",
     fontSize: 15,
   },
-  calenderContainer: {
-    marginTop: 30,
-  },
-  selectedRange: {
-    backgroundColor: Colors.PRIMARY,
-  },
-  selectedDayText: {
-    color: Colors.SECONDARY,
+  optionContainer: {
+    height: "80%",
   },
   btn: {
     padding: 15,

@@ -1,3 +1,4 @@
+import { BudgetOption } from "@/components/selectBudget/selectBudgetOptions";
 import { TravelerOption } from "@/components/selectTraveler/selectTravelerOptions";
 import moment from "moment";
 import { createContext } from "react";
@@ -16,6 +17,7 @@ interface TripData {
     endDate: moment.Moment;
     totalNoOfDays: number;
   };
+  budgetOption: BudgetOption;
 }
 
 export interface CreateTripContext {
@@ -43,6 +45,12 @@ export const CreateTripContext = createContext<CreateTripContext>({
       startDate: moment(new Date()),
       endDate: moment(new Date()),
       totalNoOfDays: 0,
+    },
+    budgetOption: {
+      id: "",
+      title: "",
+      description: "",
+      icon: "",
     },
   },
   setTripData: () => {},

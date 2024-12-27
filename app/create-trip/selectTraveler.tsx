@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, StyleSheet, FlatList, TouchableOpacity } from "react-native";
+import { View, Text, SafeAreaView, StyleSheet, FlatList, TouchableOpacity, Alert } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { Colors } from "@/Constant/Colors";
 import { CreateTripContext } from "@/contexts/CreateTripContext";
@@ -28,6 +28,22 @@ export default function SelectTraveler() {
   }, [selectedTraveler]);
 
   function handleCountinue() {
+    if (!selectedTraveler) {
+      Alert.alert(
+        "Error",
+        "Select Travelers",
+        [
+          {
+            text: "Ok",
+            style: "default",
+          },
+        ],
+        {
+          cancelable: true,
+        }
+      );
+      return;
+    }
     console.log("Button ---", tripData);
     router.push("/create-trip/selectDate");
   }
