@@ -12,6 +12,7 @@ export default function CreateTripLayout() {
         lat: 0,
         lng: 0,
       },
+      bbox: [],
     },
     travelerCount: {
       id: "",

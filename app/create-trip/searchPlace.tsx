@@ -26,6 +26,7 @@ export default function searchPlace() {
           lat: data.geometry.coordinates[1],
           lng: data.geometry.coordinates[0],
         },
+        bbox: data.bbox,
       },
     });
     router.push("/create-trip/selectTraveler");

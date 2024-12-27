@@ -3,13 +3,14 @@ import { TravelerOption } from "@/components/selectTraveler/selectTravelerOption
 import moment from "moment";
 import { createContext } from "react";
 
-interface TripData {
+export interface TripData {
   location: {
     name: string;
     cordinates: {
       lat: number;
       lng: number;
     };
+    bbox: number[];
   };
   travelerCount: TravelerOption;
   dates: {

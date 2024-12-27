@@ -35,19 +35,17 @@ export default function GenerateTrip() {
     const result = await chatSession.sendMessage(prompt);
     const jsonResult = JSON.parse(result.response.text());
     const tripId = uuidv4();
-    console.log("Above DB Storeing");
     try {
       await setDoc(doc(db, "trips", tripId), {
         userEmail: user?.email,
         tripPlan: jsonResult,
         tripData: JSON.stringify(tripData),
         docId: tripId,
+        generatedOn: new Date(),
       });
-      console.log("Inside Try");
     } catch (error) {
       console.log(error);
     }
-    console.log("Above Router");
     router.replace("/(tabs)/myTrip");
   }
 
