@@ -32,7 +32,8 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      "./config_plugins/withAnimatedWebp"
     ],
     "experiments": {
       "typedRoutes": true

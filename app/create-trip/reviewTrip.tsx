@@ -18,9 +18,7 @@ export default function ReviewTrip() {
   }, []);
 
   function handleCountinue() {
-    console.log("-----------------------------");
-    console.log(tripData);
-    console.log("-----------------------------");
+    router.push("/create-trip/generateTrip");
   }
 
   return (

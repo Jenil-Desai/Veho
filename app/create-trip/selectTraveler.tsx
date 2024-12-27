@@ -44,7 +44,6 @@ export default function SelectTraveler() {
       );
       return;
     }
-    console.log("Button ---", tripData);
     router.push("/create-trip/selectDate");
   }
 

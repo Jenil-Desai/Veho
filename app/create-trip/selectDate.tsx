@@ -51,7 +51,6 @@ export default function SelectDate(this: any) {
         totalNoOfDays: totalNoDays + 1,
       },
     });
-    console.log("Button Selected Date --- ", tripData);
     router.push("/create-trip/selectBudget");
   }
 
