@@ -45,7 +45,7 @@
     "react-dom": "18.3.1",
     "react-native": "0.76.5",
     "react-native-calendar-picker": "^8.0.5",
-    "react-native-fast-image": "^0.1.1",
+    "react-native-fast-image": "^8.3.0",
     "react-native-gesture-handler": "~2.20.2",
     "react-native-get-random-values": "^1.11.0",
     "react-native-mapbox-places-autocomplete": "^0.0.3",
