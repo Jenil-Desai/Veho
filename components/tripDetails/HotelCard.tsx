@@ -6,10 +6,9 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useEffect, useState } from "react";
-import { Hotel } from "./HotelList";
+import React from "react";
 import { Colors } from "@/Constant/Colors";
-import { getImageUrl } from "@/utils/fetchImageUrl";
+import { Hotel } from "@/types/types";
 
 interface HotelCardProps {
   hotel: Hotel;

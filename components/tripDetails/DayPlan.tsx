@@ -2,28 +2,7 @@ import { FlatList, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import ActivitiesList from "./ActivitiesList";
 import DayPlanButton from "./DayPlanButton";
-
-export interface Activities {
-  details: string;
-  geo_coordinates: {
-    latitude: string;
-    longitude: string;
-  };
-  image_url: string;
-  place_name: string;
-  note: string;
-  time: string;
-  travel_time: string;
-  ticket_pricing: {
-    approx_adult: string;
-    approx_child: string;
-  };
-}
-
-interface DayPlan {
-  activities: Activities[];
-  day: number;
-}
+import { DayPlan } from "@/types/types";
 
 interface DayPlanListProps {
   dayPlan: DayPlan[];

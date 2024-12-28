@@ -1,9 +1,4 @@
-export interface BudgetOption {
-  id: string;
-  title: string;
-  description: string;
-  icon: string;
-}
+import { BudgetOption } from "@/types/types";
 
 const budgetOptions: BudgetOption[] = [
   {

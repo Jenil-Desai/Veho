@@ -1,10 +1,6 @@
 import axios from "axios";
 
-interface getImageUrlProps {
-  placeName: string;
-}
-
-export async function getImageUrl({ placeName }: getImageUrlProps) {
+export async function getImageUrl(placeName: string) {
   try {
     const url = `https://api.unsplash.com/photos/random?query=${encodeURIComponent(
       placeName

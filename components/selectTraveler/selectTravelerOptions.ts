@@ -1,16 +1,11 @@
-export interface TravelerOption {
-  id: string;
-  title: string;
-  description: string;
-  icon: string;
-  people: string;
-}
+import { TravelerOption } from "@/types/types";
 
 const travelerOptions: TravelerOption[] = [
   {
     id: "solo_traveler",
     title: "Solo Explorer",
-    description: "Perfect for independent adventurers seeking personal discoveries",
+    description:
+      "Perfect for independent adventurers seeking personal discoveries",
     icon: "🧑🏻",
     people: "1 People",
   },

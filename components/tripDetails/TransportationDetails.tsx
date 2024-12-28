@@ -1,24 +1,23 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { Colors } from "@/Constant/Colors";
+import { Transportation } from "@/types/types";
 
-interface OtherDetailsBlockProps {
-  otherData: any;
+interface TransportationDetailsProps {
+  transportationData: Transportation;
 }
 
-export default function OtherDetailsBlock({
-  otherData,
-}: OtherDetailsBlockProps) {
+export default function TransportationDetails({
+  transportationData,
+}: TransportationDetailsProps) {
   return (
     <View style={styles.wrapper}>
       <View style={styles.headingContainer}>
         <Text style={styles.heading}>🚖 transportation</Text>
       </View>
+      <Text style={styles.priceTxt}>Local : {transportationData.local}</Text>
       <Text style={styles.priceTxt}>
-        Local : {otherData.transportation.local}
-      </Text>
-      <Text style={styles.priceTxt}>
-        From Airport : {otherData.transportation.from_airport}
+        From Airport : {transportationData.from_airport}
       </Text>
     </View>
   );

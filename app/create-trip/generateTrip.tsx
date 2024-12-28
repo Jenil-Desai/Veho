@@ -10,6 +10,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "@/configs/firebaseConfig";
 import { v4 as uuidv4 } from "uuid";
 import { getImageUrl } from "@/utils/fetchImageUrl";
+import { TripPlan } from "@/types/types";
 
 export default function GenerateTrip() {
   const router = useRouter();
@@ -36,7 +37,7 @@ export default function GenerateTrip() {
       budget: tripData.budgetOption.title,
     });
     let jsonResult;
-    let place_image;
+    let place_image: string = "";
     try {
       const result = await chatSession.sendMessage(prompt);
       jsonResult = JSON.parse(result.response.text());

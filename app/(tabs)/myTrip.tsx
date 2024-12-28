@@ -4,7 +4,6 @@ import {
   SafeAreaView,
   StyleSheet,
   TouchableOpacity,
-  SectionList,
   ScrollView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
@@ -23,9 +22,10 @@ import { auth, db } from "@/configs/firebaseConfig";
 import TripList from "@/components/myTrip/TripList";
 import { router } from "expo-router";
 import MyTripSkeleton from "@/components/myTrip/skeleton";
+import { Trip } from "@/types/types";
 
 export default function MyTrip() {
-  const [userTrips, setUserTrips] = useState<DocumentData[]>([]);
+  const [userTrips, setUserTrips] = useState<Trip[]>([]);
   const [loading, setLoading] = useState(true);
   const user = auth.currentUser;
 
@@ -43,10 +43,7 @@ export default function MyTrip() {
         orderBy("generatedOn", "desc")
       );
       const querySnapshot = await getDocs(qry);
-      const trips: DocumentData[] = [];
-      querySnapshot.forEach((doc) => {
-        trips.push(doc.data());
-      });
+      const trips: Trip[] = querySnapshot.docs.map((doc) => doc.data() as Trip);
       setUserTrips(trips);
     } catch (error) {
       console.log(error);

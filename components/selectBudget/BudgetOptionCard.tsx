@@ -1,16 +1,24 @@
 import { View, Text, StyleSheet } from "react-native";
 import React from "react";
 import { Colors } from "@/Constant/Colors";
-import budgetOptions, { BudgetOption } from "./selectBudgetOptions";
+import { BudgetOption } from "./selectBudgetOptions";
 
 interface BudgetOptionCardProps {
   BudgetOption: BudgetOption;
   selected: BudgetOption;
 }
 
-export default function BudgetOptionCard({ BudgetOption, selected }: BudgetOptionCardProps) {
+export default function BudgetOptionCard({
+  BudgetOption,
+  selected,
+}: BudgetOptionCardProps) {
   return (
-    <View style={[styles.wrapper, selected.id === BudgetOption.id ? { borderWidth: 3 } : null]}>
+    <View
+      style={[
+        styles.wrapper,
+        selected.id === BudgetOption.id ? { borderWidth: 3 } : null,
+      ]}
+    >
       <View style={styles.textConatianer}>
         <Text style={styles.title}>{BudgetOption.title}</Text>
         <Text style={styles.description}>{BudgetOption.description}</Text>

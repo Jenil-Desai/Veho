@@ -7,19 +7,18 @@ import {
   FlatList,
 } from "react-native";
 import React from "react";
-import { DocumentData } from "firebase/firestore";
 import moment from "moment";
-import { TripData } from "@/contexts/CreateTripContext";
 import { Colors } from "@/Constant/Colors";
 import TripCard from "./TripCard";
 import { useRouter } from "expo-router";
+import { Trip, TripData } from "@/types/types";
 
 interface TripListProps {
-  trips: DocumentData[];
+  trips: Trip[];
 }
 
 export default function TripList({ trips }: TripListProps) {
-  const latestTrip: TripData = JSON.parse(trips[0].tripData);
+  const latestTrip: TripData = JSON.parse(trips[0].tripData as string);
   const router = useRouter();
 
   return (

@@ -1,13 +1,25 @@
-import { View, Text, SafeAreaView, StyleSheet, Platform, TouchableOpacity, FlatList, Alert } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  Platform,
+  TouchableOpacity,
+  FlatList,
+  Alert,
+} from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { Colors } from "@/Constant/Colors";
 import { CreateTripContext } from "@/contexts/CreateTripContext";
 import { useNavigation, useRouter } from "expo-router";
-import budgetOptions, { BudgetOption } from "@/components/selectBudget/selectBudgetOptions";
+import budgetOptions from "@/components/selectBudget/selectBudgetOptions";
 import BudgetOptionCard from "@/components/selectBudget/BudgetOptionCard";
+import { BudgetOption } from "@/types/types";
 
 export default function SelectBudget() {
-  const [selectedBudget, setSelectedBudget] = useState<BudgetOption>(budgetOptions[0]);
+  const [selectedBudget, setSelectedBudget] = useState<BudgetOption>(
+    budgetOptions[0]
+  );
   const navigation = useNavigation();
   const router = useRouter();
   const { tripData, setTripData } = useContext(CreateTripContext);
@@ -58,7 +70,10 @@ export default function SelectBudget() {
             data={budgetOptions}
             renderItem={({ item }) => (
               <TouchableOpacity onPress={() => setSelectedBudget(item)}>
-                <BudgetOptionCard BudgetOption={item} selected={selectedBudget} />
+                <BudgetOptionCard
+                  BudgetOption={item}
+                  selected={selectedBudget}
+                />
               </TouchableOpacity>
             )}
             keyExtractor={(item: BudgetOption) => item.id}

@@ -13,12 +13,13 @@ import moment from "moment";
 import FlightDetailsBlock from "@/components/tripDetails/FlightDetailsBlock";
 import HotelList from "@/components/tripDetails/HotelList";
 import DayPlan from "@/components/tripDetails/DayPlan";
-import OtherDetailsBlock from "@/components/tripDetails/otherDetails";
+import { Trip, TripData } from "@/types/types";
+import TransportationDetails from "@/components/tripDetails/TransportationDetails";
 
 export default function TripDetails() {
-  const { trip } = useLocalSearchParams();
-  const parsedTrip = JSON.parse(trip as string);
-  const tripData = JSON.parse(parsedTrip.tripData);
+  const { trip } = useLocalSearchParams<{ trip: string }>();
+  const parsedTrip: Trip = JSON.parse(trip);
+  const tripData: TripData = JSON.parse(parsedTrip.tripData as string);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -49,12 +50,8 @@ export default function TripDetails() {
           {tripData.travelerCount.icon} {tripData.travelerCount.title}
         </Text>
         <FlightDetailsBlock flightData={parsedTrip.tripPlan.flights} />
-        <OtherDetailsBlock
-          otherData={{
-            best_time_to_visit: parsedTrip.tripPlan.best_time_to_visit,
-            budget: parsedTrip.tripPlan.budget,
-            transportation: parsedTrip.tripPlan.transportation,
-          }}
+        <TransportationDetails
+          transportationData={parsedTrip.tripPlan.transportation}
         />
         <HotelList hotelList={parsedTrip.tripPlan.hotels} />
         <DayPlan dayPlan={parsedTrip.tripPlan.day_plan} />

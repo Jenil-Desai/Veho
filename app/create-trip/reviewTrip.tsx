@@ -1,4 +1,11 @@
-import { View, Text, SafeAreaView, StyleSheet, Platform, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  Platform,
+  TouchableOpacity,
+} from "react-native";
 import React, { useContext, useEffect } from "react";
 import { Colors } from "@/Constant/Colors";
 import { useNavigation, useRouter } from "expo-router";
@@ -26,7 +33,9 @@ export default function ReviewTrip() {
       <View style={[styles.container, containerMargin]}>
         <Text style={styles.heading}>Your journey overview</Text>
         <View style={styles.subHeadingContainer}>
-          <Text style={styles.subHeading}>Review your intelligent travel plan</Text>
+          <Text style={styles.subHeading}>
+            Review your intelligent travel plan
+          </Text>
         </View>
         <View style={styles.dataContainer}>
           <Text style={styles.dataIcon}>📍</Text>
@@ -39,7 +48,11 @@ export default function ReviewTrip() {
           <Text style={styles.dataIcon}>🗓️</Text>
           <View style={styles.dataTxtContainer}>
             <Text style={styles.dataHeading}>Travel Dates</Text>
-            <Text style={styles.dataTxt}>{`${moment(tripData.dates.startDate).format("DD MMM")} To ${moment(tripData.dates.endDate).format("DD MMM")} (${tripData.dates.totalNoOfDays})`}</Text>
+            <Text style={styles.dataTxt}>{`${moment(
+              tripData.dates.startDate
+            ).format("DD MMM")} To ${moment(tripData.dates.endDate).format(
+              "DD MMM"
+            )} (${tripData.dates.totalNoOfDays})`}</Text>
           </View>
         </View>
         <View style={styles.dataContainer}>

@@ -1,16 +1,16 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
-import { DocumentData } from "firebase/firestore";
 import moment from "moment";
 import { Colors } from "@/Constant/Colors";
 import { router } from "expo-router";
+import { Trip, TripData } from "@/types/types";
 
 interface TripCardProps {
-  trip: DocumentData;
+  trip: Trip;
 }
 
 export default function TripCard({ trip }: TripCardProps) {
-  const tripData = JSON.parse(trip.tripData);
+  const tripData: TripData = JSON.parse(trip.tripData as string);
 
   return (
     <TouchableOpacity

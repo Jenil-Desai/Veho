@@ -1,8 +1,7 @@
 import { CreateTripContext } from "@/contexts/CreateTripContext";
-import { Slot, Stack } from "expo-router";
+import { Stack } from "expo-router";
 import moment from "moment";
 import { useState } from "react";
-import { ScreenStackHeaderSearchBarView } from "react-native-screens";
 
 export default function CreateTripLayout() {
   const [tripData, setTripData] = useState<CreateTripContext["tripData"]>({

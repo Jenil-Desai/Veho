@@ -1,14 +1,25 @@
-import { View, Text, SafeAreaView, StyleSheet, FlatList, TouchableOpacity, Alert } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { Colors } from "@/Constant/Colors";
 import { CreateTripContext } from "@/contexts/CreateTripContext";
 import { useNavigation, useRouter } from "expo-router";
-import travelerOptions, { TravelerOption } from "@/components/selectTraveler/selectTravelerOptions";
+import travelerOptions from "@/components/selectTraveler/selectTravelerOptions";
 import TravelerOptionCard from "@/components/selectTraveler/TravelerOptionCard";
 import { Platform } from "expo-modules-core";
+import { TravelerOption } from "@/types/types";
 
 export default function SelectTraveler() {
-  const [selectedTraveler, setSelectedTraveler] = useState<TravelerOption>(travelerOptions[0]);
+  const [selectedTraveler, setSelectedTraveler] = useState<TravelerOption>(
+    travelerOptions[0]
+  );
   const navigation = useNavigation();
   const router = useRouter();
   const { tripData, setTripData } = useContext(CreateTripContext);
@@ -52,14 +63,19 @@ export default function SelectTraveler() {
       <View style={[styles.container, containerMargin]}>
         <Text style={styles.heading}>Who's joining?</Text>
         <View style={styles.subHeadingContainer}>
-          <Text style={styles.subHeading}>Customize your journey companions</Text>
+          <Text style={styles.subHeading}>
+            Customize your journey companions
+          </Text>
         </View>
         <View style={Platform.OS === "ios" ? null : styles.optionContainer}>
           <FlatList
             data={travelerOptions}
             renderItem={({ item }) => (
               <TouchableOpacity onPress={() => setSelectedTraveler(item)}>
-                <TravelerOptionCard travelerOption={item} selected={selectedTraveler} />
+                <TravelerOptionCard
+                  travelerOption={item}
+                  selected={selectedTraveler}
+                />
               </TouchableOpacity>
             )}
             keyExtractor={(item: TravelerOption) => item.id}

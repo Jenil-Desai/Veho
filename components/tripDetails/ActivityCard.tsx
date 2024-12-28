@@ -7,8 +7,8 @@ import {
   View,
 } from "react-native";
 import { Colors } from "@/Constant/Colors";
-import { Activities } from "./DayPlan";
 import React from "react";
+import { Activities } from "@/types/types";
 
 interface ActivityCardProps {
   activity: Activities;

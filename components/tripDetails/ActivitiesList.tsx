@@ -1,7 +1,7 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { Activities } from "./DayPlan";
 import ActivityCard from "./ActivityCard";
+import { Activities } from "@/types/types";
 
 interface ActivitiesListProps {
   activities: Activities[];
@@ -10,7 +10,11 @@ interface ActivitiesListProps {
 export default function ActivitiesList({ activities }: ActivitiesListProps) {
   return (
     <View style={styles.wrapper}>
-      <FlatList data={activities} renderItem={({ item }) => <ActivityCard activity={item} />} keyExtractor={(item) => item.details} />
+      <FlatList
+        data={activities}
+        renderItem={({ item }) => <ActivityCard activity={item} />}
+        keyExtractor={(item) => item.details}
+      />
     </View>
   );
 }

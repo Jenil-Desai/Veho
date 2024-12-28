@@ -1,25 +1,6 @@
-import { BudgetOption } from "@/components/selectBudget/selectBudgetOptions";
-import { TravelerOption } from "@/components/selectTraveler/selectTravelerOptions";
+import { TripData } from "@/types/types";
 import moment from "moment";
 import { createContext } from "react";
-
-export interface TripData {
-  location: {
-    name: string;
-    cordinates: {
-      lat: number;
-      lng: number;
-    };
-    bbox: number[];
-  };
-  travelerCount: TravelerOption;
-  dates: {
-    startDate: moment.Moment;
-    endDate: moment.Moment;
-    totalNoOfDays: number;
-  };
-  budgetOption: BudgetOption;
-}
 
 export interface CreateTripContext {
   tripData: TripData;

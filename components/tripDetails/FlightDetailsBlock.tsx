@@ -1,9 +1,10 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { Colors } from "@/Constant/Colors";
+import { Flight } from "@/types/types";
 
 interface FlightDetailsBlockProps {
-  flightData: any;
+  flightData: Flight[];
 }
 
 export default function FlightDetailsBlock({
