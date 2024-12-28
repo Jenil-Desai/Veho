@@ -1,15 +1,32 @@
-import { View, Text, SafeAreaView, StyleSheet, ScrollView, TouchableOpacity, SectionList } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  TouchableOpacity,
+  SectionList,
+  ScrollView,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { Colors } from "@/Constant/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import StartNewTripCard from "@/components/myTrip/StartNewTripCard";
-import { collection, DocumentData, getDocs, orderBy, query, where } from "firebase/firestore";
+import {
+  collection,
+  DocumentData,
+  getDocs,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
 import { auth, db } from "@/configs/firebaseConfig";
 import TripList from "@/components/myTrip/TripList";
 import { router } from "expo-router";
+import MyTripSkeleton from "@/components/myTrip/skeleton";
 
 export default function MyTrip() {
   const [userTrips, setUserTrips] = useState<DocumentData[]>([]);
+  const [loading, setLoading] = useState(true);
   const user = auth.currentUser;
 
   useEffect(() => {
@@ -17,9 +34,14 @@ export default function MyTrip() {
   }, []);
 
   async function getTrips() {
+    setLoading(true);
     setUserTrips([]);
     try {
-      const qry = query(collection(db, "trips"), where("userEmail", "==", user?.email), orderBy("generatedOn", "desc"));
+      const qry = query(
+        collection(db, "trips"),
+        where("userEmail", "==", user?.email),
+        orderBy("generatedOn", "desc")
+      );
       const querySnapshot = await getDocs(qry);
       const trips: DocumentData[] = [];
       querySnapshot.forEach((doc) => {
@@ -28,10 +50,12 @@ export default function MyTrip() {
       setUserTrips(trips);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   }
 
-  console.log(userTrips);
+  if (loading) return <MyTripSkeleton />;
 
   return (
     <SafeAreaView style={styles.warpper}>
@@ -39,12 +63,20 @@ export default function MyTrip() {
         <View>
           <View style={styles.headerContainer}>
             <Text style={styles.header}>MyTrip</Text>
-            <TouchableOpacity onPress={() => router.push("/create-trip/searchPlace")}>
+            <TouchableOpacity
+              onPress={() => router.push("/create-trip/searchPlace")}
+            >
               <Ionicons name="add-circle" size={40} color={Colors.PRIMARY} />
             </TouchableOpacity>
           </View>
         </View>
-        <ScrollView>{userTrips.length === 0 ? <StartNewTripCard /> : <TripList trips={userTrips} />}</ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          {userTrips.length === 0 ? (
+            <StartNewTripCard />
+          ) : (
+            <TripList trips={userTrips} />
+          )}
+        </ScrollView>
       </View>
     </SafeAreaView>
   );

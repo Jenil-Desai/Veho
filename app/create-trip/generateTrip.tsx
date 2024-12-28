@@ -9,6 +9,7 @@ import { chatSession } from "@/configs/geminiConfig";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "@/configs/firebaseConfig";
 import { v4 as uuidv4 } from "uuid";
+import { getImageUrl } from "@/utils/fetchImageUrl";
 
 export default function GenerateTrip() {
   const router = useRouter();
@@ -20,7 +21,10 @@ export default function GenerateTrip() {
     navigation.setOptions({
       headerShown: false,
     });
-    generateTrip();
+    async function main() {
+      await generateTrip();
+    }
+    main();
   }, []);
 
   async function generateTrip() {
@@ -31,15 +35,33 @@ export default function GenerateTrip() {
       travelers: tripData.travelerCount.people,
       budget: tripData.budgetOption.title,
     });
+    let jsonResult;
+    let place_image;
+    try {
+      const result = await chatSession.sendMessage(prompt);
+      jsonResult = JSON.parse(result.response.text());
+      place_image = await getImageUrl(jsonResult.destination);
 
-    const result = await chatSession.sendMessage(prompt);
-    const jsonResult = JSON.parse(result.response.text());
+      for (const hotel of jsonResult.hotels) {
+        hotel.image_url = await getImageUrl(hotel.hotel_name);
+      }
+
+      for (const day of jsonResult.day_plan) {
+        for (const activity of day.activities) {
+          activity.image_url = await getImageUrl(activity.place_name);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
     const tripId = uuidv4();
     try {
       await setDoc(doc(db, "trips", tripId), {
         userEmail: user?.email,
         tripPlan: jsonResult,
         tripData: JSON.stringify(tripData),
+        place_image,
         docId: tripId,
         generatedOn: new Date(),
       });
@@ -51,10 +73,16 @@ export default function GenerateTrip() {
 
   return (
     <View style={styles.wrapper}>
-      <Image source={require("../../assets/images/loading-screen.gif")} style={styles.backgroundImage} resizeMode="cover" />
+      <Image
+        source={require("../../assets/images/loading-screen.gif")}
+        style={styles.backgroundImage}
+        resizeMode="cover"
+      />
       <BlurView intensity={50} style={styles.glassmorphismContainer}>
         <Text style={styles.heading}>Crafting your journey</Text>
-        <Text style={styles.subHeading}>Your AI companion is mapping out the perfect adventure</Text>
+        <Text style={styles.subHeading}>
+          Your AI companion is mapping out the perfect adventure
+        </Text>
         <Text style={styles.wraning}>Do Not Go Back</Text>
       </BlurView>
     </View>

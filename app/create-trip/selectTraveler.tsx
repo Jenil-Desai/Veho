@@ -73,7 +73,7 @@ export default function SelectTraveler() {
   );
 }
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
   wrapper: {
     backgroundColor: Colors.WHITE,
     flex: 1,

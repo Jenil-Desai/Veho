@@ -34,6 +34,7 @@ export const CreateTripContext = createContext<CreateTripContext>({
         lat: 0,
         lng: 0,
       },
+      bbox: [],
     },
     travelerCount: {
       id: "",

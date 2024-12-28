@@ -1,10 +1,18 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  FlatList,
+} from "react-native";
 import React from "react";
 import { DocumentData } from "firebase/firestore";
 import moment from "moment";
 import { TripData } from "@/contexts/CreateTripContext";
 import { Colors } from "@/Constant/Colors";
 import TripCard from "./TripCard";
+import { useRouter } from "expo-router";
 
 interface TripListProps {
   trips: DocumentData[];
@@ -12,25 +20,41 @@ interface TripListProps {
 
 export default function TripList({ trips }: TripListProps) {
   const latestTrip: TripData = JSON.parse(trips[0].tripData);
+  const router = useRouter();
 
   return (
     <View>
       <View style={styles.container}>
-        <Image source={require("../../assets/images/Login-Screen-Image.jpeg")} style={styles.image} />
+        <Image source={{ uri: trips[0].place_image }} style={styles.image} />
       </View>
       <View style={styles.txtContainer}>
-        <Text style={styles.locationTxt}>{trips[0].tripPlan.tripDetails.location}</Text>
+        <Text style={styles.locationTxt}>{trips[0].tripPlan.trip_name}</Text>
         <View style={styles.subTxtContainer}>
-          <Text style={styles.subTxt}>{moment(latestTrip.dates.startDate).format("DD MMM yyyy")}</Text>
+          <Text style={styles.subTxt}>
+            {moment(latestTrip.dates.startDate).format("DD MMM yyyy")}
+          </Text>
           <Text style={styles.subTxt}>
             {latestTrip.travelerCount.icon} {latestTrip.travelerCount.title}
           </Text>
         </View>
-        <TouchableOpacity style={styles.btn}>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() =>
+            router.push({
+              pathname: "/(trip-details)/tripDetails",
+              params: { trip: JSON.stringify(trips[0]) },
+            })
+          }
+        >
           <Text style={styles.btnTxt}>See Your Plan</Text>
         </TouchableOpacity>
       </View>
-      <FlatList nestedScrollEnabled={true} data={trips} renderItem={({ item }) => <TripCard trip={item} />} keyExtractor={(item) => item.docId} />
+      <FlatList
+        nestedScrollEnabled={true}
+        data={trips}
+        renderItem={({ item }) => <TripCard trip={item} />}
+        keyExtractor={(item) => item.docId}
+      />
     </View>
   );
 }
@@ -66,8 +90,8 @@ const styles = StyleSheet.create({
   },
   btn: {
     marginTop: 10,
-    padding: 15,
-    borderRadius: 15,
+    padding: 10,
+    borderRadius: 10,
     backgroundColor: Colors.PRIMARY,
   },
   btnTxt: {

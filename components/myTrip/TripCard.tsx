@@ -1,8 +1,9 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { DocumentData } from "firebase/firestore";
 import moment from "moment";
 import { Colors } from "@/Constant/Colors";
+import { router } from "expo-router";
 
 interface TripCardProps {
   trip: DocumentData;
@@ -12,14 +13,24 @@ export default function TripCard({ trip }: TripCardProps) {
   const tripData = JSON.parse(trip.tripData);
 
   return (
-    <View style={styles.card}>
-      <Image source={require("../../assets/images/Login-Screen-Image.jpeg")} style={styles.image} />
-      <View>
-        <Text style={styles.heading}>{trip.tripPlan.tripDetails.location}</Text>
-        <Text style={styles.subTxt}>{moment(tripData.dates.startDate).format("DD MMM yyyy")}</Text>
+    <TouchableOpacity
+      style={styles.card}
+      onPress={() =>
+        router.push({
+          pathname: "/(trip-details)/tripDetails",
+          params: { trip: JSON.stringify(trip) },
+        })
+      }
+    >
+      <Image source={{ uri: trip.place_image }} style={styles.image} />
+      <View style={styles.textContainer}>
+        <Text style={styles.heading}>{trip.tripPlan.trip_name}</Text>
+        <Text style={styles.subTxt}>
+          {moment(tripData.dates.startDate).format("DD MMM yyyy")}
+        </Text>
         <Text style={styles.subTxt}>{tripData.travelerCount.title}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 
@@ -35,6 +46,10 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 15,
+  },
+  textContainer: {
+    flex: 1,
+    justifyContent: "center",
   },
   heading: {
     fontFamily: "outfit-medium",
