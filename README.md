@@ -1,50 +1,101 @@
-# Welcome to your Expo app 👋
+# 🌍 Veho - AI Travel Planner
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+**Veho** is an AI-powered travel planning mobile application. Create a fully planned trip in just **4 easy steps**! From selecting dates to finding the best hotels and attractions, Veho takes care of everything for you.
 
-## Get started
+---
 
-1. Install dependencies
+## 📑 Table of Contents
 
+1. [Overview](#-overview)
+2. [Technologies](#-technologies)
+3. [Packages & Libraries Used](#-packages--libraries-used)
+4. [Getting Started](#-getting-started)
+5. [Setup](#-setup)
+6. [Features](#-features)
+7. [Demo & Screenshots](#-demo--screenshots)
+8. [Acknowledgments](#-acknowledgments)
+9. [License](#-license)
+
+---
+
+## 🌟 Overview
+
+Veho is a travel planner designed to simplify your trip planning experience. Using AI, it generates complete travel itineraries, including accommodations, attractions, and more.
+
+---
+
+## 💻 Technologies
+
+This project leverages the following technologies:
+
+| Mobile Framework        | Language       | Backend      | AI Integration |
+| ----------------------- | -------------- | ------------ | -------------- |
+| **React Native + Expo** | **TypeScript** | **Firebase** | **Gemini SDK** |
+
+---
+
+## 📦 Packages / Libraries Used
+
+The following packages and libraries are used in this project:
+
+| Package / Library              | Purpose                                 |
+| ------------------------------ | --------------------------------------- |
+| `React Native Calendar Picker` | Date selection for trip planning        |
+| `React Native Carousel`        | Smooth and interactive carousels        |
+| `Mapbox`                       | Display interactive maps and locations  |
+| `Gemini SDK`                   | AI-generated trip plans                 |
+| `Moti`                         | Animations and transitions              |
+| `Moment`                       | Date and time management                |
+| `UUID`                         | Unique ID generation                    |
+| `Firebase`                     | Backend authentication and data storage |
+
+---
+
+## 🚀 Getting Started
+
+Follow the official Expo setup guide for your platform:  
+**[Expo Setup Guide](https://docs.expo.dev/get-started/installation/)**
+
+---
+
+## ⚙️ Setup
+
+1. Run the following command to start the application:
    ```bash
-   npm install
+   npm start
    ```
+2. Follow the on-screen instructions to launch the application on your device or emulator.
 
-2. Start the app
+---
 
-   ```bash
-    npx expo start
-   ```
+## 🎯 Features
 
-In the output, you'll find options to open the app in a
+1. **Secure Authentication**: User sign-up and sign-in for personalized experiences.
+2. **Generate Trips**: Create complete travel itineraries in 4 simple steps.
+3. **AI-Powered Trip Planning**: AI generates plans covering hotels, attractions, and activities based on your selected dates and nights.
+4. **Discover Trending Places**: Explore popular destinations worldwide.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+---
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## 🔗 Demo & Screenshots
 
-## Get a fresh project
+- Demo and screenshots will be added by the project owner.
 
-When you're ready, run:
+---
 
-```bash
-npm run reset-project
-```
+## 🙏 Acknowledgments
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Special thanks to:
 
-## Learn more
+- [YouTube Tutorial](https://youtu.be/ZcZu1NYx-WE?si=fyyu0nc6L7wyWdre)
+- [Stackoveflow](https://stackoverflow.com)
 
-To learn more about developing your project with Expo, look at the following resources:
+---
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## 📜 License
 
-## Join the community
+This project is licensed under the [MIT License](LICENSE). See the [LICENSE](LICENSE) file for details.
 
-Join our community of developers creating universal apps.
+---
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### ✈️ Plan your next adventure with **Veho**!
