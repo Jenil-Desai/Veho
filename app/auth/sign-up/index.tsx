@@ -1,9 +1,18 @@
-import { Alert, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigation, useRouter } from "expo-router";
 import { Colors } from "@/Constant/Colors";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/configs/firebaseConfig";
+import { auth, db } from "@/configs/firebaseConfig";
+import { doc, setDoc } from "firebase/firestore";
 
 export default function SignUp() {
   const nameInputRef = useRef<TextInput | null>(null);
@@ -21,7 +30,7 @@ export default function SignUp() {
     });
   }, []);
 
-  const onCreateAccount = () => {
+  async function onCreateAccount() {
     if (name.length <= 0) {
       Alert.alert(
         "Error",
@@ -77,12 +86,22 @@ export default function SignUp() {
     }
 
     createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+      .then(async (userCredential) => {
         const user = userCredential.user;
+        try {
+          await setDoc(doc(db, "users", user.uid), {
+            uid: user.uid,
+            displayName: name,
+            email: user.email,
+            registerOn: user.metadata.creationTime,
+          });
+        } catch (error) {
+          console.log(error);
+        }
+
         router.replace("/(tabs)/myTrip");
       })
       .catch((error) => {
-        const errorCode = error.code;
         const errorMessage = error.message;
         Alert.alert("Error In Creating Account", errorMessage, [
           {
@@ -91,7 +110,7 @@ export default function SignUp() {
           },
         ]);
       });
-  };
+  }
 
   return (
     <SafeAreaView style={styles.wrapper}>
@@ -99,21 +118,47 @@ export default function SignUp() {
         <Text style={styles.heading}>Begin your intelligent journey</Text>
         <Text style={styles.subHeading}>Where AI meets adventure</Text>
         <View style={{ marginTop: 45 }}>
-          <Text style={{ fontFamily: "outfit", marginLeft: 15 }}>Full Name</Text>
-          <TextInput style={styles.input} keyboardType="default" textContentType="name" placeholder="Enter Your Name" onChangeText={(value) => setName(value)} ref={nameInputRef} />
+          <Text style={{ fontFamily: "outfit", marginLeft: 15 }}>
+            Full Name
+          </Text>
+          <TextInput
+            style={styles.input}
+            keyboardType="default"
+            textContentType="name"
+            placeholder="Enter Your Name"
+            onChangeText={(value) => setName(value)}
+            ref={nameInputRef}
+          />
         </View>
         <View style={{ marginTop: 20 }}>
           <Text style={{ fontFamily: "outfit", marginLeft: 15 }}>Email</Text>
-          <TextInput style={styles.input} keyboardType="email-address" textContentType="emailAddress" placeholder="Enter Your Email" onChangeText={(value) => setEmail(value)} ref={emailInputRef} />
+          <TextInput
+            style={styles.input}
+            keyboardType="email-address"
+            textContentType="emailAddress"
+            placeholder="Enter Your Email"
+            onChangeText={(value) => setEmail(value)}
+            ref={emailInputRef}
+          />
         </View>
         <View style={{ marginTop: 20 }}>
           <Text style={{ fontFamily: "outfit", marginLeft: 15 }}>Password</Text>
-          <TextInput style={styles.input} secureTextEntry={true} textContentType="password" placeholder="Enter Your Password" onChangeText={(value) => setPassword(value)} ref={passwordInputRef} />
+          <TextInput
+            style={styles.input}
+            secureTextEntry={true}
+            textContentType="password"
+            placeholder="Enter Your Password"
+            onChangeText={(value) => setPassword(value)}
+            ref={passwordInputRef}
+          />
         </View>
         <TouchableOpacity style={styles.btn} onPress={onCreateAccount}>
           <Text style={styles.btnTxt}>Sign Up</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btnSecndary} onPress={() => router.replace("/auth/sign-in")}>
+        <TouchableOpacity
+          style={styles.btnSecndary}
+          onPress={() => router.replace("/auth/sign-in")}
+        >
           <Text style={styles.btnTxtSecondary}>Already Have Account</Text>
         </TouchableOpacity>
       </View>

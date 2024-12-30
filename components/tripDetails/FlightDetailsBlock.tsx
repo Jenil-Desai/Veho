@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Linking, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { Colors } from "@/Constant/Colors";
 import { Flight } from "@/types/types";
@@ -14,7 +14,7 @@ export default function FlightDetailsBlock({
     <View style={styles.wrapper}>
       <View style={styles.headingContainer}>
         <Text style={styles.heading}>✈️ Flights</Text>
-        <TouchableOpacity style={styles.btn}>
+        <TouchableOpacity style={styles.btn} onPress={() => Linking.openURL(flightData[0].booking_url)}>
           <Text style={styles.btnTxt}>Book Here</Text>
         </TouchableOpacity>
       </View>

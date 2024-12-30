@@ -1,4 +1,12 @@
-import { Alert, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigation, useRouter } from "expo-router";
 import { Colors } from "@/Constant/Colors";
@@ -19,7 +27,7 @@ export default function SignIn() {
     });
   }, []);
 
-  const onLogin = () => {
+  function onLogin() {
     if (email.length <= 0) {
       Alert.alert(
         "Error",
@@ -71,25 +79,57 @@ export default function SignIn() {
           },
         ]);
       });
-  };
+  }
 
   return (
     <SafeAreaView style={styles.wrapper}>
       <View style={{ padding: 10, marginTop: 40 }}>
         <Text style={styles.heading}>Welcome back, explorer</Text>
-        <Text style={styles.subHeading}>Your intelligent journey continues</Text>
+        <Text style={styles.subHeading}>
+          Your intelligent journey continues
+        </Text>
         <View style={{ marginTop: 45 }}>
           <Text style={{ fontFamily: "outfit", marginLeft: 15 }}>Email</Text>
-          <TextInput style={styles.input} keyboardType="email-address" textContentType="emailAddress" placeholder="Enter Your Email" value={email} onChangeText={(value) => setEmail(value)} ref={emailInputRef} />
+          <TextInput
+            style={styles.input}
+            keyboardType="email-address"
+            textContentType="emailAddress"
+            placeholder="Enter Your Email"
+            value={email}
+            onChangeText={(value) => setEmail(value)}
+            ref={emailInputRef}
+          />
         </View>
         <View style={{ marginTop: 20 }}>
-          <Text style={{ fontFamily: "outfit", marginLeft: 15 }}>Password</Text>
-          <TextInput style={styles.input} secureTextEntry={true} textContentType="password" placeholder="Enter Your Password" value={password} onChangeText={(value) => setPassword(value)} ref={passwordInputRef} />
+          <View style={styles.passwordContainer}>
+            <Text style={{ fontFamily: "outfit", marginLeft: 15 }}>
+              Password
+            </Text>
+            <Text
+              style={styles.resetPassword}
+              onPress={() => router.push("/auth/reset-password")}
+            >
+              Reset Password
+            </Text>
+          </View>
+
+          <TextInput
+            style={styles.input}
+            secureTextEntry={true}
+            textContentType="password"
+            placeholder="Enter Your Password"
+            value={password}
+            onChangeText={(value) => setPassword(value)}
+            ref={passwordInputRef}
+          />
         </View>
         <TouchableOpacity style={styles.btn} onPress={onLogin}>
           <Text style={styles.btnTxt}>Log In</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btnSecndary} onPress={() => router.replace("/auth/sign-up")}>
+        <TouchableOpacity
+          style={styles.btnSecndary}
+          onPress={() => router.replace("/auth/sign-up")}
+        >
           <Text style={styles.btnTxtSecondary}>Create Account</Text>
         </TouchableOpacity>
       </View>
@@ -118,6 +158,21 @@ const styles = StyleSheet.create({
     borderRadius: 99,
     borderColor: Colors.GRAY,
     fontFamily: "outfit",
+  },
+  passwordContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 5,
+  },
+  resetPassword: {
+    marginRight: 15,
+    fontFamily: "outfit",
+    color: Colors.SECONDARY,
+    textDecorationStyle: "solid",
+    textDecorationColor: Colors.SECONDARY,
+    textDecorationLine: "underline",
   },
   btn: {
     padding: 15,
