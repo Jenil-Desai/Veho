@@ -1,7 +1,15 @@
-import { Linking, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Linking,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React from "react";
 import { Colors } from "@/Constant/Colors";
 import { Flight } from "@/types/types";
+import { Ionicons } from "@expo/vector-icons";
+import InfoBtn from "../InfoBtn";
 
 interface FlightDetailsBlockProps {
   flightData: Flight[];
@@ -14,11 +22,29 @@ export default function FlightDetailsBlock({
     <View style={styles.wrapper}>
       <View style={styles.headingContainer}>
         <Text style={styles.heading}>✈️ Flights</Text>
-        <TouchableOpacity style={styles.btn} onPress={() => Linking.openURL(flightData[0].booking_url)}>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => Linking.openURL(flightData[0].booking_url)}
+        >
           <Text style={styles.btnTxt}>Book Here</Text>
         </TouchableOpacity>
       </View>
-      <Text style={styles.priceTxt}>Price : {flightData[0].approx_price}</Text>
+      <View style={styles.headingContainer}>
+        <Text style={styles.priceTxt}>
+          Price : {flightData[0].approx_price}
+        </Text>
+        <InfoBtn
+          text={flightData[0].note}
+          placment="top"
+          triggerComponent={
+            <Ionicons
+              name="information-circle-outline"
+              size={20}
+              style={styles.infoBtn}
+            />
+          }
+        />
+      </View>
     </View>
   );
 }
@@ -55,6 +81,10 @@ const styles = StyleSheet.create({
   priceTxt: {
     fontFamily: "outfit",
     fontSize: 17,
+    marginTop: 7,
+  },
+  infoBtn: {
+    fontFamily: "outfit",
     marginTop: 7,
   },
 });
