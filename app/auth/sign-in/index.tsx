@@ -107,7 +107,7 @@ export default function SignIn() {
             </Text>
             <Text
               style={styles.resetPassword}
-              onPress={() => router.push("/auth/reset-password")}
+              onPress={() => router.replace("/auth/reset-password")}
             >
               Reset Password
             </Text>
