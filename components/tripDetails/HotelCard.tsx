@@ -9,6 +9,7 @@ import {
 import React from "react";
 import { Colors } from "@/Constant/Colors";
 import { Hotel } from "@/types/types";
+import InfoBtn from "../InfoBtn";
 
 interface HotelCardProps {
   hotel: Hotel;
@@ -19,9 +20,12 @@ export default function HotelCard({ hotel }: HotelCardProps) {
     <View style={styles.card}>
       <Image source={{ uri: hotel.image_url }} style={styles.image} />
       <View>
-        <Text style={styles.heading} numberOfLines={1}>
-          {hotel.hotel_name}
-        </Text>
+        <View style={styles.headingContainer}>
+          <Text style={styles.heading} numberOfLines={1}>
+            {hotel.hotel_name}
+          </Text>
+          {hotel.note && <InfoBtn placment="top" text={hotel.note} />}
+        </View>
         <View>
           <Text style={styles.details}>{hotel.description}</Text>
         </View>
@@ -66,6 +70,12 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 120,
     borderRadius: 15,
+  },
+  headingContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "baseline",
   },
   heading: {
     fontFamily: "outfit-medium",

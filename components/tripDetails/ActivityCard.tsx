@@ -9,6 +9,7 @@ import {
 import { Colors } from "@/Constant/Colors";
 import React from "react";
 import { Activities } from "@/types/types";
+import InfoBtn from "../InfoBtn";
 
 interface ActivityCardProps {
   activity: Activities;
@@ -19,10 +20,12 @@ export default function ActivityCard({ activity }: ActivityCardProps) {
     <View style={styles.card}>
       <Image source={{ uri: activity.image_url }} style={styles.image} />
       <View style={styles.txtContainer}>
-        <Text style={styles.heading}>{activity.place_name}</Text>
+        <View style={styles.headingContainer}>
+          <Text style={styles.heading}>{activity.place_name}</Text>
+          {activity.note && <InfoBtn text={activity.note} placment="top" />}
+        </View>
         <Text style={styles.details}>{activity.details}</Text>
         <Text style={styles.otherDetails}>⏱️ Time : {activity.time}</Text>
-        {/* <Text style={styles.otherDetails}></Text> */}
         <Text style={styles.otherDetails}>
           {activity.travel_time && `🚌 Travel Time : ${activity.travel_time}`}
         </Text>
@@ -67,6 +70,12 @@ const styles = StyleSheet.create({
   },
   txtContainer: {
     marginTop: 5,
+  },
+  headingContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "baseline",
   },
   heading: {
     fontFamily: "outfit-bold",

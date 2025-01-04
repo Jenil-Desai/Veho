@@ -33,17 +33,7 @@ export default function FlightDetailsBlock({
         <Text style={styles.priceTxt}>
           Price : {flightData[0].approx_price}
         </Text>
-        <InfoBtn
-          text={flightData[0].note}
-          placment="top"
-          triggerComponent={
-            <Ionicons
-              name="information-circle-outline"
-              size={20}
-              style={styles.infoBtn}
-            />
-          }
-        />
+        <InfoBtn text={flightData[0].note} placment="top" />
       </View>
     </View>
   );
@@ -62,6 +52,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    marginTop: 7,
   },
   heading: {
     fontFamily: "outfit",
@@ -81,10 +72,5 @@ const styles = StyleSheet.create({
   priceTxt: {
     fontFamily: "outfit",
     fontSize: 17,
-    marginTop: 7,
-  },
-  infoBtn: {
-    fontFamily: "outfit",
-    marginTop: 7,
   },
 });

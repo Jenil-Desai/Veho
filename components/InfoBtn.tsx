@@ -6,7 +6,8 @@ import {
   PopoverBody,
   PopoverContent,
 } from "./ui/popover";
-import { Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 interface InfoBtnProps {
   text: string;
@@ -23,14 +24,9 @@ interface InfoBtnProps {
     | "left"
     | "left top"
     | "left bottom";
-  triggerComponent: JSX.Element;
 }
 
-export default function InfoBtn({
-  text,
-  placment,
-  triggerComponent,
-}: InfoBtnProps) {
+export default function InfoBtn({ text, placment }: InfoBtnProps) {
   const [isOpen, setIsOpen] = useState(false);
   const handleOpen = () => {
     setIsOpen(true);
@@ -48,7 +44,11 @@ export default function InfoBtn({
       trigger={(triggerProps) => {
         return (
           <TouchableOpacity {...triggerProps}>
-            {triggerComponent}
+            <Ionicons
+              name="information-circle-outline"
+              size={20}
+              style={styles.infoBtn}
+            />
           </TouchableOpacity>
         );
       }}
@@ -63,3 +63,9 @@ export default function InfoBtn({
     </Popover>
   );
 }
+
+const styles = StyleSheet.create({
+  infoBtn: {
+    fontFamily: "outfit",
+  },
+});
