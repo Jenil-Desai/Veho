@@ -13,6 +13,7 @@ import { Colors } from "@/Constant/Colors";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "@/configs/firebaseConfig";
 import { doc, setDoc } from "firebase/firestore";
+import { PasswordChecker } from "@/utils/checkPassword";
 
 export default function SignUp() {
   const nameInputRef = useRef<TextInput | null>(null);
@@ -21,6 +22,7 @@ export default function SignUp() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordChecker, setPasswordChecker] = useState<PasswordChecker>();
   const navigation = useNavigation();
   const router = useRouter();
 
@@ -67,10 +69,10 @@ export default function SignUp() {
       return;
     }
 
-    if (password.length <= 0 || password.length < 8) {
+    if (passwordChecker?.isValidPassword()) {
       Alert.alert(
         "Error",
-        "Password Must Be Atleast 8 Characters",
+        "Password Must Follow All Constarits",
         [
           {
             text: "Ok",
@@ -112,6 +114,11 @@ export default function SignUp() {
       });
   }
 
+  function handlePasswordChange(value: React.SetStateAction<string>) {
+    setPassword(value);
+    setPasswordChecker(new PasswordChecker(password));
+  }
+
   return (
     <SafeAreaView style={styles.wrapper}>
       <View style={{ padding: 10, marginTop: 40 }}>
@@ -148,9 +155,31 @@ export default function SignUp() {
             secureTextEntry={true}
             textContentType="password"
             placeholder="Enter Your Password"
-            onChangeText={(value) => setPassword(value)}
+            onChangeText={handlePasswordChange}
             ref={passwordInputRef}
           />
+        </View>
+        <View style={styles.passwordReqContainer}>
+          <Text style={styles.passwordReqTxt}>
+            {passwordChecker?.isContainsUpperCase() ? "✅" : "❌"} Atleast 1
+            Uppercase Character
+          </Text>
+          <Text style={styles.passwordReqTxt}>
+            {passwordChecker?.isContainsLowerCase() ? "✅" : "❌"} Atleast 1
+            lowercase Character
+          </Text>
+          <Text style={styles.passwordReqTxt}>
+            {passwordChecker?.isContainsNumeric() ? "✅" : "❌"} Atleast 1
+            Numeric Character
+          </Text>
+          <Text style={styles.passwordReqTxt}>
+            {passwordChecker?.isContainsSpecial() ? "✅" : "❌"} Atleast 1
+            Special Character
+          </Text>
+          <Text style={styles.passwordReqTxt}>
+            {passwordChecker?.isValidLength() ? "✅" : "❌"} Atleast 8
+            Characeter Long
+          </Text>
         </View>
         <TouchableOpacity style={styles.btn} onPress={onCreateAccount}>
           <Text style={styles.btnTxt}>Sign Up</Text>
@@ -187,6 +216,16 @@ const styles = StyleSheet.create({
     borderRadius: 99,
     borderColor: Colors.GRAY,
     fontFamily: "outfit",
+  },
+  passwordReqContainer: {
+    marginTop: 7,
+    marginLeft: 15,
+    rowGap: 2,
+  },
+  passwordReqTxt: {
+    fontFamily: "outfit",
+    fontSize: 12,
+    color: Colors.GRAY,
   },
   btn: {
     padding: 15,
