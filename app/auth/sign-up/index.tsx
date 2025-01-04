@@ -23,6 +23,7 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordChecker, setPasswordChecker] = useState<PasswordChecker>();
+  const [loading, setLoading] = useState<boolean | undefined>();
   const navigation = useNavigation();
   const router = useRouter();
 
@@ -33,6 +34,7 @@ export default function SignUp() {
   }, []);
 
   async function onCreateAccount() {
+    setLoading(true);
     if (name.length <= 0) {
       Alert.alert(
         "Error",
@@ -48,6 +50,7 @@ export default function SignUp() {
           cancelable: true,
         }
       );
+      setLoading(false);
       return;
     }
 
@@ -66,6 +69,7 @@ export default function SignUp() {
           cancelable: true,
         }
       );
+      setLoading(false);
       return;
     }
 
@@ -84,6 +88,7 @@ export default function SignUp() {
           cancelable: true,
         }
       );
+      setLoading(false);
       return;
     }
 
@@ -100,7 +105,6 @@ export default function SignUp() {
         } catch (error) {
           console.log(error);
         }
-
         router.replace("/(tabs)/myTrip");
       })
       .catch((error) => {
@@ -112,6 +116,7 @@ export default function SignUp() {
           },
         ]);
       });
+    setLoading(false);
   }
 
   function handlePasswordChange(value: React.SetStateAction<string>) {
@@ -129,6 +134,8 @@ export default function SignUp() {
             Full Name
           </Text>
           <TextInput
+            editable={!loading}
+            selectTextOnFocus={!loading}
             style={styles.input}
             keyboardType="default"
             textContentType="name"
@@ -140,6 +147,8 @@ export default function SignUp() {
         <View style={{ marginTop: 20 }}>
           <Text style={{ fontFamily: "outfit", marginLeft: 15 }}>Email</Text>
           <TextInput
+            editable={!loading}
+            selectTextOnFocus={!loading}
             style={styles.input}
             keyboardType="email-address"
             textContentType="emailAddress"
@@ -151,6 +160,8 @@ export default function SignUp() {
         <View style={{ marginTop: 20 }}>
           <Text style={{ fontFamily: "outfit", marginLeft: 15 }}>Password</Text>
           <TextInput
+            editable={!loading}
+            selectTextOnFocus={!loading}
             style={styles.input}
             secureTextEntry={true}
             textContentType="password"
@@ -181,10 +192,15 @@ export default function SignUp() {
             Characeter Long
           </Text>
         </View>
-        <TouchableOpacity style={styles.btn} onPress={onCreateAccount}>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={onCreateAccount}
+          disabled={loading}
+        >
           <Text style={styles.btnTxt}>Sign Up</Text>
         </TouchableOpacity>
         <TouchableOpacity
+          disabled={loading}
           style={styles.btnSecndary}
           onPress={() => router.replace("/auth/sign-in")}
         >

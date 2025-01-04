@@ -18,6 +18,7 @@ export default function SignIn() {
   const passwordInputRef = useRef<TextInput | null>(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState<boolean | undefined>();
   const navigation = useNavigation();
   const router = useRouter();
 
@@ -28,6 +29,7 @@ export default function SignIn() {
   }, []);
 
   function onLogin() {
+    setLoading(true);
     if (email.length <= 0) {
       Alert.alert(
         "Error",
@@ -43,6 +45,7 @@ export default function SignIn() {
           cancelable: true,
         }
       );
+      setLoading(false);
       return;
     }
 
@@ -61,6 +64,7 @@ export default function SignIn() {
           cancelable: true,
         }
       );
+      setLoading(false);
       return;
     }
 
@@ -79,6 +83,7 @@ export default function SignIn() {
           },
         ]);
       });
+    setLoading(false);
   }
 
   return (
@@ -91,6 +96,8 @@ export default function SignIn() {
         <View style={{ marginTop: 45 }}>
           <Text style={{ fontFamily: "outfit", marginLeft: 15 }}>Email</Text>
           <TextInput
+            editable={!loading}
+            selectTextOnFocus={!loading}
             style={styles.input}
             keyboardType="email-address"
             textContentType="emailAddress"
@@ -114,6 +121,8 @@ export default function SignIn() {
           </View>
 
           <TextInput
+            editable={!loading}
+            selectTextOnFocus={!loading}
             style={styles.input}
             secureTextEntry={true}
             textContentType="password"
@@ -123,10 +132,15 @@ export default function SignIn() {
             ref={passwordInputRef}
           />
         </View>
-        <TouchableOpacity style={styles.btn} onPress={onLogin}>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={onLogin}
+          disabled={loading}
+        >
           <Text style={styles.btnTxt}>Log In</Text>
         </TouchableOpacity>
         <TouchableOpacity
+          disabled={loading}
           style={styles.btnSecndary}
           onPress={() => router.replace("/auth/sign-up")}
         >
