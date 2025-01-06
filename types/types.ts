@@ -100,3 +100,8 @@ export interface Trip {
   tripPlan: TripPlan;
   userEmail: string;
 }
+
+export interface ProfileOptions {
+  title: string;
+  component: JSX.Element;
+}

@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 
-export default function ChangeSection() {
+export default function ChangeNameSection() {
   return (
     <View>
-      <Text>ChangeSection</Text>
+      <Text>ChangeNameSection</Text>
     </View>
   );
 }

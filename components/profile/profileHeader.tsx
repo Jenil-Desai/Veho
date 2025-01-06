@@ -25,7 +25,7 @@ export default function ProfileHeader({
           <Text style={styles.txtValue}>{userData.email}</Text>
         </View>
         <View style={styles.txtContainer}>
-          <Text style={styles.txtLabel}>Register On :</Text>
+          <Text style={styles.txtLabel}>Registered On :</Text>
           <Text style={styles.txtValue}>
             {moment(userData.registerOn).format("DD MMM yyy")}
           </Text>

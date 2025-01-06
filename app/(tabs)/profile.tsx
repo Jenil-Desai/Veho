@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  FlatList,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Colors } from "@/Constant/Colors";
@@ -13,9 +14,17 @@ import { auth, db } from "@/configs/firebaseConfig";
 import { useRouter } from "expo-router";
 import { doc, DocumentData, getDoc } from "firebase/firestore";
 import ProfileHeader from "@/components/profile/profileHeader";
+import { profileOptions } from "@/components/profile/profileOptions";
+import ProfileOptionsBtn from "@/components/profile/ProfileOptionsBtn";
+import { ProfileOptions } from "@/types/types";
+import ChangeEmailSection from "@/components/profile/changeEmailSection";
 
 export default function Profile() {
   const [userData, setUserData] = useState<DocumentData>({});
+  const [selectedOption, setSelectedOption] = useState<ProfileOptions>({
+    title: "Email",
+    component: <ChangeEmailSection />,
+  });
   const user = auth.currentUser;
   const router = useRouter();
 
@@ -49,7 +58,23 @@ export default function Profile() {
           </TouchableOpacity>
         </View>
         <ProfileHeader userData={userData} />
-        <View style={styles.optionsContainer}></View>
+        <View style={styles.optionsContainer}>
+          <FlatList
+            horizontal={true}
+            data={profileOptions}
+            renderItem={({ item }) => (
+              <ProfileOptionsBtn
+                optionTitle={item.title}
+                onClick={() => setSelectedOption(item)}
+                selectedOption={selectedOption}
+              />
+            )}
+            keyExtractor={(item) => item.title}
+          />
+        </View>
+        <View style={styles.optionFormContainer}>
+          {selectedOption.component}
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -77,7 +102,14 @@ const styles = StyleSheet.create({
   optionsContainer: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-evenly",
+    justifyContent: "center",
     alignItems: "center",
+    marginTop: 20,
+  },
+  optionFormContainer: {
+    backgroundColor: Colors.LIGHT_GRAY,
+    marginTop: 20,
+    borderRadius: 10,
+    padding: 10,
   },
 });
