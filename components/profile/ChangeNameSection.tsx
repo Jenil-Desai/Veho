@@ -40,25 +40,23 @@ export default function ChangeNameSection() {
       return;
     }
 
-    if (name === confirmName) {
-      if (name.length <= 0) {
-        Alert.alert(
-          "Error",
-          "Both Name Should Match",
-          [
-            {
-              text: "Ok",
-              style: "default",
-            },
-          ],
+    if (name != confirmName) {
+      Alert.alert(
+        "Error",
+        "Both Name Should Match",
+        [
           {
-            onDismiss: () => nameInputRef?.current?.focus(),
-            cancelable: true,
-          }
-        );
-        setLoading(false);
-        return;
-      }
+            text: "Ok",
+            style: "default",
+          },
+        ],
+        {
+          onDismiss: () => nameInputRef?.current?.focus(),
+          cancelable: true,
+        }
+      );
+      setLoading(false);
+      return;
     }
 
     try {
@@ -81,23 +79,21 @@ export default function ChangeNameSection() {
         );
       }
     } catch (error) {
-      if (name.length <= 0) {
-        Alert.alert(
-          "Error",
-          "Failed To Change Name",
-          [
-            {
-              text: "Ok",
-              style: "default",
-            },
-          ],
+      Alert.alert(
+        "Error",
+        "Failed To Change Name",
+        [
           {
-            cancelable: true,
-          }
-        );
-        setLoading(false);
-        return;
-      }
+            text: "Ok",
+            style: "default",
+          },
+        ],
+        {
+          cancelable: true,
+        }
+      );
+      setLoading(false);
+      return;
     }
     setName("");
     setconfirmName("");
