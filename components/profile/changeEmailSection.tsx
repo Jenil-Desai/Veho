@@ -44,7 +44,7 @@ export default function ChangeEmailSection() {
     if (email.toLowerCase() != confirmEmail.toLowerCase()) {
       Alert.alert(
         "Error",
-        "Both Email Are Not Matching",
+        "Both Email Should Match",
         [
           {
             text: "Ok",
@@ -65,9 +65,23 @@ export default function ChangeEmailSection() {
       await updateDoc(doc(db, "users", currentUser.uid), {
         email: email.toLowerCase(),
       });
+      Alert.alert(
+        "Success",
+        "Successfully Changed Email",
+        [
+          {
+            text: "Ok",
+            style: "default",
+          },
+        ],
+        {
+          cancelable: true,
+        }
+      );
       currentUser.reload();
     }
-
+    setEmail("");
+    setConfirmEmail("");
     setLoading(false);
   }
 
@@ -87,7 +101,7 @@ export default function ChangeEmailSection() {
           ref={emailInputRef}
         />
       </View>
-      <View style={{ marginTop: 30 }}>
+      <View style={{ marginTop: 20 }}>
         <Text style={{ fontFamily: "outfit", marginLeft: 15 }}>
           Confirm Email
         </Text>
@@ -124,42 +138,12 @@ export default function ChangeEmailSection() {
 }
 
 const styles = StyleSheet.create({
-  wrapper: {
-    backgroundColor: Colors.WHITE,
-    height: "100%",
-  },
-  heading: {
-    fontFamily: "outfit-bold",
-    fontSize: 30,
-    color: "#0A2342",
-  },
-  subHeading: {
-    fontSize: 20,
-    color: Colors.GRAY,
-    marginTop: 1,
-  },
   input: {
     padding: 15,
     borderWidth: 1,
     borderRadius: 99,
     borderColor: Colors.GRAY,
     fontFamily: "outfit",
-  },
-  passwordContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 5,
-  },
-  resetPassword: {
-    marginRight: 15,
-    fontSize: 12,
-    fontFamily: "outfit",
-    color: Colors.SECONDARY,
-    textDecorationStyle: "solid",
-    textDecorationColor: Colors.SECONDARY,
-    textDecorationLine: "underline",
   },
   btn: {
     padding: 15,
