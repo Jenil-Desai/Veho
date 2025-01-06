@@ -67,13 +67,13 @@ export default function MyTrip() {
             </TouchableOpacity>
           </View>
         </View>
-        {/* <ScrollView showsVerticalScrollIndicator={false}> */}
         {userTrips.length === 0 ? (
           <StartNewTripCard />
         ) : (
-          <TripList trips={userTrips} />
+          <View style={{ flex: 1 }}>
+            <TripList trips={userTrips} />
+          </View>
         )}
-        {/* </ScrollView> */}
       </View>
     </SafeAreaView>
   );
@@ -85,7 +85,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
-    padding: 25,
+    paddingTop: 25,
+    paddingLeft: 25,
+    paddingRight: 25,
+    paddingBottom: 20,
+    flex: 1,
   },
   headerContainer: {
     display: "flex",

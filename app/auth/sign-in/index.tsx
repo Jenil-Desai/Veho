@@ -182,6 +182,7 @@ const styles = StyleSheet.create({
   },
   resetPassword: {
     marginRight: 15,
+    fontSize: 12,
     fontFamily: "outfit",
     color: Colors.SECONDARY,
     textDecorationStyle: "solid",
