@@ -23,32 +23,43 @@ export default function TripList({ trips }: TripListProps) {
 
   return (
     <View>
-      <View style={styles.container}>
-        <Image source={{ uri: trips[0].place_image }} style={styles.image} />
-      </View>
-      <View style={styles.txtContainer}>
-        <Text style={styles.locationTxt}>{trips[0].tripPlan.trip_name}</Text>
-        <View style={styles.subTxtContainer}>
-          <Text style={styles.subTxt}>
-            {moment(latestTrip.dates.startDate).format("DD MMM yyyy")}
-          </Text>
-          <Text style={styles.subTxt}>
-            {latestTrip.travelerCount.icon} {latestTrip.travelerCount.title}
-          </Text>
-        </View>
-        <TouchableOpacity
-          style={styles.btn}
-          onPress={() =>
-            router.push({
-              pathname: "/(trip-details)/tripDetails",
-              params: { trip: JSON.stringify(trips[0]) },
-            })
-          }
-        >
-          <Text style={styles.btnTxt}>See Your Plan</Text>
-        </TouchableOpacity>
-      </View>
       <FlatList
+        showsVerticalScrollIndicator={false}
+        ListHeaderComponent={
+          <>
+            <View style={styles.container}>
+              <Image
+                source={{ uri: trips[0].place_image }}
+                style={styles.image}
+              />
+            </View>
+            <View style={styles.txtContainer}>
+              <Text style={styles.locationTxt}>
+                {trips[0].tripPlan.trip_name}
+              </Text>
+              <View style={styles.subTxtContainer}>
+                <Text style={styles.subTxt}>
+                  {moment(latestTrip.dates.startDate).format("DD MMM yyyy")}
+                </Text>
+                <Text style={styles.subTxt}>
+                  {latestTrip.travelerCount.icon}{" "}
+                  {latestTrip.travelerCount.title}
+                </Text>
+              </View>
+              <TouchableOpacity
+                style={styles.btn}
+                onPress={() =>
+                  router.push({
+                    pathname: "/(trip-details)/tripDetails",
+                    params: { trip: JSON.stringify(trips[0]) },
+                  })
+                }
+              >
+                <Text style={styles.btnTxt}>See Your Plan</Text>
+              </TouchableOpacity>
+            </View>
+          </>
+        }
         nestedScrollEnabled={true}
         data={trips}
         renderItem={({ item }) => <TripCard trip={item} />}

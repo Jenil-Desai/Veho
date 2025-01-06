@@ -67,13 +67,13 @@ export default function MyTrip() {
             </TouchableOpacity>
           </View>
         </View>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          {userTrips.length === 0 ? (
-            <StartNewTripCard />
-          ) : (
-            <TripList trips={userTrips} />
-          )}
-        </ScrollView>
+        {/* <ScrollView showsVerticalScrollIndicator={false}> */}
+        {userTrips.length === 0 ? (
+          <StartNewTripCard />
+        ) : (
+          <TripList trips={userTrips} />
+        )}
+        {/* </ScrollView> */}
       </View>
     </SafeAreaView>
   );

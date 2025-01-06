@@ -49,6 +49,7 @@ export default function Profile() {
           </TouchableOpacity>
         </View>
         <ProfileHeader userData={userData} />
+        <View style={styles.optionsContainer}></View>
       </View>
     </SafeAreaView>
   );
@@ -72,5 +73,11 @@ const styles = StyleSheet.create({
     fontFamily: "outfit-bold",
     fontSize: 35,
     color: Colors.PRIMARY,
+  },
+  optionsContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
   },
 });
