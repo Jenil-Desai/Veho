@@ -124,7 +124,7 @@ export const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: "outfit-regular",
     fontSize: 15,
-    color: Colors.GRAY,
+    color: Colors.WHITE,
     marginBottom: 20,
   },
   wraning: {

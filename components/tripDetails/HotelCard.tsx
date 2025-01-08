@@ -18,7 +18,11 @@ interface HotelCardProps {
 export default function HotelCard({ hotel }: HotelCardProps) {
   return (
     <View style={styles.card}>
-      <Image source={{ uri: hotel.image_url }} style={styles.image} />
+      <Image
+        loadingIndicatorSource={{ uri: "https://placehold.co/120" }}
+        source={{ uri: hotel.image_url }}
+        style={styles.image}
+      />
       <View>
         <View style={styles.headingContainer}>
           <Text style={styles.heading} numberOfLines={1}>

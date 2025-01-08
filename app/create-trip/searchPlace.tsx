@@ -7,9 +7,9 @@ import { CreateTripContext } from "@/contexts/CreateTripContext";
 import { LocationData } from "@/components/react-native-mapbox-places-autocomplete/types";
 
 export default function searchPlace() {
+  const { tripData, setTripData } = useContext(CreateTripContext);
   const navigation = useNavigation();
   const router = useRouter();
-  const { tripData, setTripData } = useContext(CreateTripContext);
 
   useEffect(() => {
     navigation.setOptions({
@@ -37,9 +37,19 @@ export default function searchPlace() {
       <View style={styles.container}>
         <Text style={styles.heading}>Where to explore?</Text>
         <View style={styles.subHeadingContainer}>
-          <Text style={styles.subHeading}>Let AI discover your perfect destination</Text>
+          <Text style={styles.subHeading}>
+            Let AI discover your perfect destination
+          </Text>
         </View>
-        <MapboxPlacesAutocomplete id="origin" placeholder="Search Place" accessToken={process.env.EXPO_PUBLIC_MAPBOX_PUBLIC_TOKEN} onPlaceSelect={handlePlaceSelected} countryId="IN" containerStyle={undefined} inputStyle={styles.input} />
+        <MapboxPlacesAutocomplete
+          id="origin"
+          placeholder="Search Place"
+          accessToken={process.env.EXPO_PUBLIC_MAPBOX_PUBLIC_TOKEN}
+          onPlaceSelect={handlePlaceSelected}
+          countryId="IN"
+          containerStyle={undefined}
+          inputStyle={styles.input}
+        />
       </View>
     </SafeAreaView>
   );

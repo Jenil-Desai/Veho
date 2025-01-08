@@ -4,34 +4,28 @@ import {
   SafeAreaView,
   StyleSheet,
   TouchableOpacity,
-  ScrollView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Colors } from "@/Constant/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import StartNewTripCard from "@/components/myTrip/StartNewTripCard";
-import {
-  collection,
-  DocumentData,
-  getDocs,
-  orderBy,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import { auth, db } from "@/configs/firebaseConfig";
 import TripList from "@/components/myTrip/TripList";
 import { router } from "expo-router";
 import MyTripSkeleton from "@/components/myTrip/skeleton";
 import { Trip } from "@/types/types";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function MyTrip() {
   const [userTrips, setUserTrips] = useState<Trip[]>([]);
   const [loading, setLoading] = useState(true);
+  const isFocused = useIsFocused();
   const user = auth.currentUser;
 
   useEffect(() => {
-    getTrips();
-  }, []);
+    if (isFocused) getTrips();
+  }, [isFocused]);
 
   async function getTrips() {
     setLoading(true);

@@ -18,12 +18,11 @@ export default function Discovery() {
           <View style={styles.headerContainer}>
             <Text style={styles.header}>Discovery</Text>
             <TouchableOpacity
-              onPress={() => router.push("/create-trip/searchPlace")}
+            // onPress={() => router.push("/create-trip/searchPlace")}
             >
-              <Ionicons name="add-circle" size={40} color={Colors.PRIMARY} />
+              <Ionicons name="search" size={40} color={Colors.PRIMARY} />
             </TouchableOpacity>
           </View>
-          <Text>Coming Soon</Text>
         </View>
       </View>
     </SafeAreaView>

@@ -73,7 +73,7 @@ export default function SignUp() {
       return;
     }
 
-    if (passwordChecker?.isValidPassword()) {
+    if (!passwordChecker?.isValidPassword()) {
       Alert.alert(
         "Error",
         "Password Must Follow All Constarits",

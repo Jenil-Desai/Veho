@@ -22,7 +22,12 @@ export default function TripCard({ trip }: TripCardProps) {
         })
       }
     >
-      <Image source={{ uri: trip.place_image }} style={styles.image} />
+      <Image
+        progressiveRenderingEnabled={true}
+        loadingIndicatorSource={{ uri: "https://placehold.co/100" }}
+        source={{ uri: trip.place_image || "https://placehold.co/100" }}
+        style={styles.image}
+      />
       <View style={styles.textContainer}>
         <Text style={styles.heading}>{trip.tripPlan.trip_name}</Text>
         <Text style={styles.subTxt}>

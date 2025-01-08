@@ -29,7 +29,11 @@ export default function TripList({ trips }: TripListProps) {
           <>
             <View style={styles.container}>
               <Image
-                source={{ uri: trips[0].place_image }}
+                progressiveRenderingEnabled={true}
+                loadingIndicatorSource={{ uri: "https://placehold.co/" }}
+                source={{
+                  uri: trips[0].place_image || "https://placehold.co/",
+                }}
                 style={styles.image}
               />
             </View>

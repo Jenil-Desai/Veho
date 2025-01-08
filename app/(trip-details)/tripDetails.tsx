@@ -1,13 +1,15 @@
 import {
+  Alert,
   Image,
   Platform,
   ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 import React, { useEffect } from "react";
-import { useLocalSearchParams, useNavigation } from "expo-router";
+import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import { Colors } from "@/Constant/Colors";
 import moment from "moment";
 import FlightDetailsBlock from "@/components/tripDetails/FlightDetailsBlock";
@@ -15,6 +17,9 @@ import HotelList from "@/components/tripDetails/HotelList";
 import DayPlan from "@/components/tripDetails/DayPlan";
 import { Trip, TripData } from "@/types/types";
 import TransportationDetails from "@/components/tripDetails/TransportationDetails";
+import { Ionicons } from "@expo/vector-icons";
+import { deleteDoc, doc } from "firebase/firestore";
+import { db } from "@/configs/firebaseConfig";
 
 export default function TripDetails() {
   const { trip } = useLocalSearchParams<{ trip: string }>();
@@ -32,11 +37,48 @@ export default function TripDetails() {
     });
   }, []);
 
+  async function handleDeleteTrip() {
+    await deleteDoc(doc(db, "trips", parsedTrip.docId));
+    router.replace("/(tabs)/myTrip");
+  }
+
+  function handleDeleteTripBtn() {
+    Alert.alert(
+      "Warning",
+      "This Action Can't Be Undo.",
+      [
+        {
+          text: "Ok",
+          style: "destructive",
+          onPress: handleDeleteTrip,
+        },
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+      ],
+      {
+        cancelable: true,
+      }
+    );
+  }
+
   return (
     <ScrollView style={styles.wrapper} showsVerticalScrollIndicator={false}>
-      <Image source={{ uri: parsedTrip.place_image }} style={styles.image} />
+      <Image
+        loadingIndicatorSource={{ uri: "https://placehold.co/330" }}
+        source={{ uri: parsedTrip.place_image }}
+        style={styles.image}
+      />
       <View style={styles.container}>
-        <Text style={styles.locationTxt}>{parsedTrip.tripPlan.trip_name}</Text>
+        <View style={styles.headingContainer}>
+          <Text style={styles.locationTxt}>
+            {parsedTrip.tripPlan.trip_name}
+          </Text>
+          <TouchableOpacity onPress={handleDeleteTripBtn}>
+            <Ionicons name="trash-bin" size={24} color={"red"} />
+          </TouchableOpacity>
+        </View>
         <View style={styles.dateContainer}>
           <Text style={styles.dateTxt}>
             {moment(tripData.dates.startDate).format("DD MMM yyyy")}
@@ -76,6 +118,12 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 30,
     padding: 15,
     justifyContent: "space-between",
+  },
+  headingContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   locationTxt: {
     fontFamily: "outfit-bold",

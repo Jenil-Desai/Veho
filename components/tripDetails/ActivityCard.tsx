@@ -18,7 +18,11 @@ interface ActivityCardProps {
 export default function ActivityCard({ activity }: ActivityCardProps) {
   return (
     <View style={styles.card}>
-      <Image source={{ uri: activity.image_url }} style={styles.image} />
+      <Image
+        loadingIndicatorSource={{ uri: "https://placehold.co/120" }}
+        source={{ uri: activity.image_url }}
+        style={styles.image}
+      />
       <View style={styles.txtContainer}>
         <View style={styles.headingContainer}>
           <Text style={styles.heading}>{activity.place_name}</Text>
