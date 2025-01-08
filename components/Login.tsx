@@ -1,22 +1,54 @@
-import { View, Text, Image, StyleSheet, SafeAreaView, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Animated,
+} from "react-native";
 import { Colors } from "@/Constant/Colors";
 import { useRouter } from "expo-router";
 
 export default function Login() {
   const router = useRouter();
+  const translateY = useRef(new Animated.Value(500)).current;
+
+  useEffect(() => {
+    Animated.timing(translateY, {
+      toValue: 0,
+      duration: 600,
+      useNativeDriver: true,
+    }).start();
+  }, []);
+
   return (
     <View style={styles.wrapper}>
-      <Image source={require("./../assets/images/Login-Screen-Image.jpeg")} style={styles.image} />
-      <View style={styles.container}>
+      <Image
+        source={require("./../assets/images/Login-Screen-Image.jpeg")}
+        style={styles.image}
+      />
+      <Animated.View
+        style={[
+          styles.container,
+          {
+            transform: [{ translateY }],
+          },
+        ]}
+      >
         <View style={styles.textContainer}>
           <Text style={styles.appName}>VEHO</Text>
-          <Text style={styles.tagline}>Discover the future of travel planning</Text>
+          <Text style={styles.tagline}>
+            Discover the future of travel planning
+          </Text>
         </View>
-        <TouchableOpacity style={styles.btn} onPress={() => router.push("/auth/sign-in")}>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => router.push("/auth/sign-in")}
+        >
           <Text style={styles.btnTxt}>Start Your Journey</Text>
         </TouchableOpacity>
-      </View>
+      </Animated.View>
     </View>
   );
 }
@@ -26,17 +58,21 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   image: {
+    position: "absolute",
     width: "100%",
-    height: 500,
+    height: "100%",
+    resizeMode: "cover",
   },
   container: {
     backgroundColor: Colors.WHITE,
-    marginTop: -20,
-    flex: 1,
+    height: 400,
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
-    padding: 15,
+    padding: 25,
     justifyContent: "space-between",
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
   },
   textContainer: {
     flexGrow: 1,
