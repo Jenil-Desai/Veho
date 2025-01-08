@@ -41,7 +41,9 @@ export default function GenerateTrip() {
     try {
       const result = await chatSession.sendMessage(prompt);
       jsonResult = JSON.parse(result.response.text());
-      place_image = await getImageUrl(jsonResult.destination);
+      place_image = await getImageUrl(
+        jsonResult.destination.split(",")[0].trim()
+      );
 
       for (const hotel of jsonResult.hotels) {
         hotel.image_url = await getImageUrl(hotel.hotel_name);
@@ -129,7 +131,7 @@ export const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: "outfit",
     fontSize: 15,
-    color: Colors.GRAY,
+    color: Colors.WHITE,
     marginBottom: 20,
   },
 });
