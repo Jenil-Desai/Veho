@@ -10,11 +10,9 @@ interface ActivitiesListProps {
 export default function ActivitiesList({ activities }: ActivitiesListProps) {
   return (
     <View style={styles.wrapper}>
-      <FlatList
-        data={activities}
-        renderItem={({ item }) => <ActivityCard activity={item} />}
-        keyExtractor={(item) => item.details}
-      />
+      {activities.map((activity, idx) => (
+        <ActivityCard key={idx} activity={activity} />
+      ))}
     </View>
   );
 }
