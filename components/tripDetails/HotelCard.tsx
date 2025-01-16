@@ -25,7 +25,7 @@ export default function HotelCard({ hotel }: HotelCardProps) {
       />
       <View>
         <View style={styles.headingContainer}>
-          <Text style={styles.heading} numberOfLines={1}>
+          <Text style={styles.heading} numberOfLines={2}>
             {hotel.hotel_name}
           </Text>
           {hotel.note && <InfoBtn placment="top" text={hotel.note} />}
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
+    alignItems: "baseline",
   },
   heading: {
     fontFamily: "outfit-medium",
