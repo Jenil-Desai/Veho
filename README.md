@@ -79,7 +79,7 @@ Follow the official Expo setup guide for your platform:
 
 ## 🔗 Demo & Screenshots
 
-- Demo and screenshots will be added by the project owner.
+![Mockup](./screenshots/Veho%20Mockup.png)
 
 ---
 
